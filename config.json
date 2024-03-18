@@ -1,0 +1,20 @@
+{
+    "name": "hang_the_witch",
+    "full_name": "Hang The Witch",
+    "icon": "data/icon_hang.png",
+    "disp": {
+        "dim": {
+            "w": 800,
+            "h": 600
+        }
+    },
+    "word": {
+        "letter": {
+            "dim": {
+                "w": 32,
+                "h": 50
+            },
+            "gap": 20
+        }
+    }
+}
