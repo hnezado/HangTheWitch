@@ -5,8 +5,11 @@ import pygame as pg
 pg.init()
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 clock = pg.time.Clock()
+ticks = 30
 config = {}
 disp = {}
+
+media = None
 
 # Media
 fonts = {}
@@ -16,7 +19,9 @@ music = {}
 
 # Components
 buttons = {}
+animations = {}
 game = None
+ingame_menu = None
 popup_verify = None
 
 # Other

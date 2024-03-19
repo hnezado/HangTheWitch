@@ -1,8 +1,13 @@
 {
     "cSpell.words": [
         "blit",
+        "collidepoint",
         "gallow",
         "gameover",
-        "ingame"
+        "inact",
+        "ingame",
+        "KEYDOWN",
+        "MOUSEBUTTONDOWN",
+        "pygame"
     ]
 }

@@ -1,11 +1,12 @@
 import pygame as pg
 import variables as vars
 import functions as fn
+from variables import media
 from components.Game import Game
+from components.IngameMenu import IngameMenu
 from components.Popup import Popup
 from components.Button import Button
-from components.Word import Word
-
+from components.Animation import Animation
 
 def init_vars():
     vars.disp["w"] = vars.config["disp"]["dim"]["w"]
@@ -19,41 +20,34 @@ def init_vars():
 
 def generate_media():
     # Fonts
-    vars.fonts["menu_title"] = pg.font.Font('data/fonts/feral.ttf', 120)
-    vars.fonts["menu_but"] = pg.font.Font('data/fonts/feral.ttf', 30)
-    vars.fonts["menu_but"].set_bold(True)
-    vars.fonts["ingame_tries"] = pg.font.Font('data/fonts/Haunting Attraction.ttf', 40)
-    vars.fonts["ingame_but"] = pg.font.Font('data/fonts/feral.ttf', 20)
-    vars.fonts["ingame_but"].set_bold(True)
-    vars.fonts["won"] = pg.font.Font('data/fonts/Haunting Attraction.ttf', 60)
-    vars.fonts["gameover"] = pg.font.Font('data/fonts/Haunting Attraction.ttf', 75)
-    vars.fonts["dif_txt"] = pg.font.Font('data/fonts/parchment.ttf', 70)
-    vars.fonts["dif_but"] = pg.font.Font('data/fonts/parchment.ttf', 40)
-    vars.fonts["scroll_menu_but"] = pg.font.Font('data/fonts/parchment.ttf', 40)
-    vars.fonts["scroll_menu_but"].set_bold(True)
-    vars.fonts["verify_but"] = pg.font.Font('data/fonts/feral.ttf', 18)
-    vars.fonts["verify_but"].set_bold(True)
-    vars.fonts["verify"] = pg.font.Font('data/fonts/feral.ttf', 27)
-    vars.fonts["verify"].set_bold(True)
-    vars.fonts["no_words"] = pg.font.Font('data/fonts/feral.ttf', 18)
-    vars.fonts["no_words"].set_bold(True)
-    
+    media.add_font(name="menu_title", path="data/fonts/feral.ttf", size=120)
+    media.add_font(name="menu_btn", path="data/fonts/feral.ttf", size=30, emphasis="bold")
+    media.add_font(name="ingame_tries", path="data/fonts/Haunting Attraction.ttf", size=40)
+    media.add_font(name="ingame_btn", path="data/fonts/feral.ttf", size=20, emphasis="bold")
+    media.add_font(name="ingame_menu_btn", path="data/fonts/parchment.ttf", size=40, emphasis="bold")
+    media.add_font(name="won", path="data/fonts/Haunting Attraction.ttf", size=60)
+    media.add_font(name="gameover", path="data/fonts/Haunting Attraction.ttf", size=75)
+    media.add_font(name="dif_txt", path="data/fonts/parchment.ttf", size=70)
+    media.add_font(name="dif_btn", path="data/fonts/parchment.ttf", size=40)
+    media.add_font(name="verify_txt", path="data/fonts/feral.ttf", size=27, emphasis="bold")
+    media.add_font(name="verify_btn", path="data/fonts/feral.ttf", size=18, emphasis="bold")
+
     # Images
-    vars.images["menu_bg"] = pg.image.load('data/images/bg_main.png')
-    vars.images["menu_space"] = pg.image.load('data/images/space.png')
-    vars.images["ingame_bg_board"] = pg.image.load('data/images/boards_bg.png')
-    vars.images["ingame_witch_bg"] = pg.image.load('data/images/witch_bg.png')
-    vars.images["ingame_gallows"] = pg.image.load('data/images/gallows.png')
-    vars.images["ingame_pop"] = pg.image.load('data/images/pop.png')
-    vars.images["ingame_scratch"] = pg.image.load('data/images/scratch.png')
-    vars.images["gameover_brush"] = pg.image.load('data/images/brush_traces.png')
-    vars.images["gameover_or_not"] = pg.image.load('data/images/or_not.png')
-    vars.images["scroll_dif"] = pg.image.load('data/images/scroll_wide.png')
-    vars.images["scroll_bg_fade"] = pg.image.load('data/images/fade_bg.png')
-    vars.images["scroll_bg_fade_full"] = pg.image.load('data/images/fade_bg_full.png')
-    vars.images["scroll_menu"] = pg.image.load('data/images/scroll.png')
-    vars.images["scroll_but_sound"] = pg.image.load('data/images/button_sound.png')
-    vars.images["verify_question"] = pg.image.load('data/images/question_mark.png')
+    media.add_image(name="menu_bg", path="data/images/bg_main.png")
+    media.add_image(name="menu_space", path="data/images/space.png")
+    media.add_image(name="ingame_bg_board", path="data/images/boards_bg.png")
+    media.add_image(name="ingame_witch_bg", path="data/images/witch_bg.png")
+    media.add_image(name="ingame_gallows", path="data/images/gallows.png")
+    media.add_image(name="ingame_pop", path="data/images/pop.png")
+    media.add_image(name="ingame_scratch", path="data/images/scratch.png")
+    media.add_image(name="gameover_brush", path="data/images/brush_traces.png")
+    media.add_image(name="gameover_or_not", path="data/images/or_not.png")
+    media.add_image(name="scroll_dif", path="data/images/scroll_wide.png")
+    media.add_image(name="scroll_bg_fade", path="data/images/fade_bg.png")
+    media.add_image(name="scroll_bg_fade_full", path="data/images/fade_bg_full.png")
+    media.add_image(name="scroll_menu", path="data/images/scroll.png")
+    media.add_image(name="scroll_but_sound", path="data/images/button_sound.png")
+    media.add_image(name="verify_question", path="data/images/question_mark.png")
     
     # Sounds
     vars.sounds["but_click"] = pg.mixer.Sound('data/sounds/click.ogg')
@@ -70,7 +64,7 @@ def generate_components():
     # Buttons    
     vars.buttons["menu_play"] = Button(vars.disp["disp"], 200, 50, vars.disp["w"]*0.5, vars.disp["h"]*0.7, (130, 96, 94), (179, 104, 100), 'Play', vars.fonts["menu_but"])
     vars.buttons["menu_quit"] = Button(vars.disp["disp"], 200, 50, vars.disp["w"]*0.5, vars.disp["h"]*0.8, (130, 96, 94), (179, 104, 100), 'Quit', vars.fonts["menu_but"])
-    vars.buttons["ingame_menu"] = Button(vars.disp["disp"], 100, 25, vars.disp["w"]*0.9, vars.disp["h"]*0.05, (130, 96, 94), (179, 104, 100), 'Menu', vars.fonts["ingame_but"], act_margin=3)
+    vars.buttons["ingame_menu"] = Button(vars.disp["disp"], 100, 25, vars.disp["w"]*0.9, vars.disp["h"]*0.05, (130, 96, 94), (179, 104, 100), 'Menu', media.fonts["ingame_btn"], act_margin=3)
     vars.buttons["gameover_play"] = Button(vars.disp["disp"], 200, 50, vars.disp["w"]*0.3, vars.disp["h"]*0.6, (130, 96, 94), (179, 104, 100), 'Play again', vars.fonts["menu_but"], act_margin=3)
     vars.buttons["gameover_menu"] = Button(vars.disp["disp"], 200, 50, vars.disp["w"]*0.7, vars.disp["h"]*0.6, (130, 96, 94), (179, 104, 100), 'Main menu', vars.fonts["menu_but"], act_margin=3)
     vars.buttons["scroll_resume"] = Button(vars.disp["disp"], 195, 30, vars.disp["w"]*0.5, vars.disp["h"]*0.3, (255, 255, 255), (255, 255, 255), 'Resume game', vars.fonts["scroll_menu_but"], but_transp=True)
@@ -82,6 +76,10 @@ def generate_components():
     vars.buttons["verify_no"] = Button(vars.disp["disp"], 80, 25, vars.disp["w"]*0.57, vars.disp["h"]*0.525, (130, 96, 94), (179, 104, 100), 'No', vars.fonts["verify_but"])
     vars.buttons["accept"] = Button(vars.disp["disp"], 80, 25, vars.disp["w"]*0.5, vars.disp["h"]*0.525, (130, 96, 94), (179, 104, 100), 'Accept', vars.fonts["verify_but"])
 
+    # Animations
+    vars.animations["scroll_music_toggle"] = Animation(disp=vars.disp, image=vars.images["scroll_but_sound"], num_frames=5, pos=(vars.disp["w"]*0.56, vars.disp["h"]*0.49), anim_times=1, reset_frame=False)
+    vars.animations["scroll_sound_toggle"] = Animation(disp=vars.disp, image=vars.images["scroll_but_sound"], num_frames=5, pos=(vars.disp["w"]*0.57, vars.disp["h"]*0.59), anim_times=1, reset_frame=False)
+    
     # Main Menu
 
 
@@ -96,13 +94,20 @@ def generate_components():
     # Game
     vars.game = Game(
         disp=vars.disp,
+        media=vars.media,
+        images=vars.images,
+        buttons= [vars.buttons["ingame_menu"]],
+        word_config_presets=vars.config["word"],
+        )
+        
+    # Ingame Menu
+    vars.ingame_menu = IngameMenu(
+        disp=vars.disp,
         fonts=vars.fonts,
         images=vars.images,
-        word_config_presets=vars.config["word"],
-        subcomponents={"buttons": [vars.buttons["ingame_menu"]]}
-        )
-    
-    vars.word = Word(9)
+        buttons=vars.buttons,
+        animations=vars.animations
+    )
     
     # Popup
     vars.popup_verify = Popup()

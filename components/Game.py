@@ -3,19 +3,18 @@ from components.Word import Word
 
 
 class Game:
-	def __init__(self, disp, fonts, images, subcomponents, word_config_presets) -> None:
+	def __init__(self, disp, media, images, buttons, word_config_presets) -> None:
 		self.disp = disp
-		self.fonts = fonts
+		self.media = media
 		self.images = images
 		self.gallow = self.get_frames(self.images["ingame_gallows"], 11)
+		self.gallow["pos"] = self.get_gallow_pos()
 		self.scratchs = self.get_frames(self.images["ingame_scratch"], 13)
 		self.tries = 5
 		self.word_config_presets = word_config_presets
-		self.subcomponents = subcomponents
+		self.buttons = buttons
 		self.word = ""
 		self.letters_properties = []
-  
-		self.get_gallow_pos()
 
 	@staticmethod
 	def get_frames(img, frames_num):
@@ -26,14 +25,15 @@ class Game:
 		props["frames"] = list([(0, props["h"] * frame, props["w"], props["h"]) for frame in range(frames_num)])
 		return props
 
-	def get_gallow_pos(self):
-		self.gallow["pos"] = (self.disp["w"]*0.5-self.gallow["w"]*0.5, self.disp["h"]*0.4-self.gallow["h"]*0.5)
+	def get_gallow_pos(self) -> tuple:
+		pos = (self.disp["w"]*0.5-self.gallow["w"]*0.5, self.disp["h"]*0.4-self.gallow["h"]*0.5)
+		return pos
 
 	def display(self):
 		self.disp["disp"].blit(self.images["ingame_bg_board"], (0, 0))
 		self.disp["disp"].blit(self.images["ingame_witch_bg"], (0, 0))
-		text_object(self.disp["disp"], 'Remaining tries: ', txt_font=self.fonts["ingame_tries"], pos=(self.disp["w"]*0.47, self.disp["h"]*0.07), fg_color=(150, 0, 0))
-		text_object(self.disp["disp"], txt='{}'.format(self.tries), txt_font=self.fonts["ingame_tries"], pos=(self.disp["w"]*0.62, self.disp["h"]*0.07), fg_color=(150, 0, 0))
+		text_object(self.disp["disp"], 'Remaining tries: ', txt_font=self.media.fonts["ingame_tries"], pos=(self.disp["w"]*0.47, self.disp["h"]*0.07), fg_color=(150, 0, 0))
+		text_object(self.disp["disp"], txt='{}'.format(self.tries), txt_font=self.media.fonts["ingame_tries"], pos=(self.disp["w"]*0.62, self.disp["h"]*0.07), fg_color=(150, 0, 0))
 
 		# Display Gallow
 		self.disp["disp"].blit(self.images["ingame_gallows"], self.gallow["pos"], self.gallow["frames"][10-self.tries])
@@ -49,7 +49,7 @@ class Game:
 				self.disp["disp"].blit(self.images["ingame_scratch"], pos, self.scratchs["frames"][11])
         
         # Sub-components
-		for button in self.subcomponents["buttons"]:
+		for button in self.buttons:
 			button.display()
 
 	def toggle_dif_menu(self):
