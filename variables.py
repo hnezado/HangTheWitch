@@ -16,16 +16,11 @@ music = {}
 
 # Components
 buttons = {}
-gallow = None
-letters = None
-
-# Constants
-dif_rare = [['e', 't', 'a', 'o'], ['i', 'n', 's', 'h', 'r', 'd', 'l'], ['c', 'u', 'm', 'w', 'f'], ['g', 'y', 'p', 'b', 'v', 'k'], ['j', 'x', 'q', 'z']]
+game = None
+popup_verify = None
 
 # Other
-music_on, sound_on = True, True
 active_win = "game"
-current_game = False
-word = "pruebas"
-letters_properties = []
-tries = 0
+popup = ""
+bg_faded = False
+music_on, sound_on = True, True

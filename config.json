@@ -1,11 +1,21 @@
 {
     "name": "hang_the_witch",
     "full_name": "Hang The Witch",
-    "icon": "data/icon_hang.png",
+    "icon": "data/images/icon_hang.png",
     "disp": {
         "dim": {
             "w": 800,
             "h": 600
+        }
+    },
+    "dif_menu": {
+        "number_of_difficulties": 10,
+        "buttons": {
+            "dim": {
+                "w": 30,
+                "h": 40
+            },
+            "gap": 60
         }
     },
     "word": {

@@ -18,22 +18,14 @@ def initialize():
 def main():
     while True:
         event_manager()
-        show_popup()
-        show_ingame_menu()
-        show_diff()
         show_main_menu()
         show_game()
+        show_menu()
+        show_popup()
         
-
-def show_popup():
-    pass
-
-def show_ingame_menu():
-    pass
-
-def show_diff():
-    pass
-
+        vars.pg.display.update()
+        vars.clock.tick(30)
+        
 def show_main_menu():
     pass
 
@@ -41,24 +33,21 @@ def show_game():
     """Shows the game window"""
     
     if vars.active_win == "game":
-        if not vars.current_game:
-            new_game()
-        
-        vars.disp["disp"].blit(vars.images["ingame_bg_board"], (0, 0))
-        vars.disp["disp"].blit(vars.images["ingame_witch_bg"], (0, 0))
-        fn.text_object(vars.disp["disp"], 'Remaining tries: ', txt_font=vars.fonts["ingame_tries"], pos=(vars.disp["w"]*0.47, vars.disp["h"]*0.07), fg_color=(150, 0, 0))
-        fn.text_object(vars.disp["disp"], txt='{}'.format(vars.tries), txt_font=vars.fonts["ingame_tries"], pos=(vars.disp["w"]*0.62, vars.disp["h"]*0.07), fg_color=(150, 0, 0))
-        vars.buttons["ingame_menu"].display()
-        vars.gallow.display()
-        vars.letters.display_letters()
+        if vars.word:
+            vars.game.display()
+        else: # Show difficulties menu when there is no word selected
+            vars.disp["disp"].blit(vars.images["ingame_bg_board"], (0, 0))
+            vars.buttons["ingame_menu"].display()
+            vars.disp["disp"].blit(vars.images["scroll_dif"], (0, 0))
 
-        vars.pg.display.update()
-        vars.clock.tick(30)
+def show_menu():
+    pass
 
-def new_game():
-    vars.tries = 10
-    vars.current_game = True
-
+def show_popup():
+    if vars.popup == "confirmation":
+        pass
+    elif vars.popup == "ingame_menu":
+        pass
 
 if __name__ == '__main__':
     initialize()

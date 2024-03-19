@@ -352,84 +352,9 @@ class Anim:
 			vars_2.pg.display.update()
 			vars_2.clock.tick(5)
 
-
-class Diff:
-	def __init__(self, surface=vars_2.screen, bg_surface=vars_2.img_scroll_dif, but_width=30, but_height=40,
-				num_buttons=10, margin=60):
-		self.surface = surface
-		self.disp_w, self.disp_h = self.surface.get_size()
-		self.bg_surface = bg_surface
-		self.but_width = but_width
-		self.but_height = but_height
-		self.num_buttons = num_buttons
-		self.margin = margin
-
-	def diff_blit(self):
-		'''It blits the difficulty buttons on the dif choice menu'''
-		bg_surface_rect = self.bg_surface.get_rect()
-		self.surface.blit(self.bg_surface, (self.disp_w*0.5-bg_surface_rect.width*0.5, self.disp_h*0.5-bg_surface_rect.height*0.5))
-		text_object(self.surface, 'Choose difficulty', txt_font=vars_2.font_dif_txt, pos=(self.disp_w*0.5, self.disp_h*0.32))
-
-		for button in range(int(self.num_buttons*0.5)):
-			b_dif = Button(self.surface, self.but_width, self.but_height, ((self.disp_w*0.5-(self.but_width+self.margin)
-							*(self.num_buttons*0.25))+(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*button,
-							bg_surface_rect.height*0.65, (130, 96, 94), (179, 104, 100), str(button+1), vars_2.font_dif_but,
-							text_centered=(((self.disp_w*0.5-(self.but_width+self.margin)*(self.num_buttons*0.25))+
-							(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*button,
-							bg_surface_rect.height*0.65+self.but_height*0.5+4))
-			b_dif.drawing()
-			if len(vars_2.dif_but_list) < self.num_buttons:
-				vars_2.dif_but_list.append(b_dif)
-		for button in range(int(self.num_buttons*0.5), self.num_buttons):
-			b_dif = Button(self.surface, self.but_width, self.but_height, ((self.disp_w*0.5-(self.but_width+self.margin)
-							*(self.num_buttons*0.25))+(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*
-							(button-self.num_buttons*0.5), bg_surface_rect.height*0.85, (130, 96, 94), (179, 104, 100),
-							str(button+1), vars_2.font_dif_but,
-							text_centered=(((self.disp_w*0.5-(self.but_width+self.margin)*(self.num_buttons*0.25))+
-							(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*(button-self.num_buttons*0.5),
-							bg_surface_rect.height*0.85+self.but_height*0.5+4))
-			b_dif.drawing()
-			if len(vars_2.dif_but_list) < self.num_buttons:
-				vars_2.dif_but_list.append(b_dif)
-
-	def f_randomize(self):
-		'''Generates a random word from the chosen difficulty list'''
-
-		diff_choice = vars_2.dif_all[vars_2.diff_num_choice-1]
-		vars_2.random_word = vars_2.r.choice(diff_choice)
-		vars_2.char_list = list([char for char in vars_2.random_word])
-		vars_2.removable_char_list = list([char for char in vars_2.random_word])
-
-
-# Sound #
-snd_but_click = Sound(vars_2.rs_but_click)
-snd_menu_wind = Sound(vars_2.rm_menu_wind, -1)
-snd_menu_but_play = Sound(vars_2.rs_menu_but_play)
-snd_ingame_music = Sound(vars_2.rm_ingame_music, -1)
-snd_ingame_scratch = Sound(vars_2.rs_ingame_scratch)
-snd_ingame_pop = Sound(vars_2.rs_ingame_pop)
-snd_won = Sound(vars_2.rs_won)
-snd_gameover = Sound(vars_2.rs_gameover)
-snd_scroll = Sound(vars_2.rs_scroll)
-
 # Animations #
 anim_menu_title = Anim(vars_2.screen, img_anim=vars_2.img_menu_bg)
 anim_ingame_boards = Anim(surface=vars_2.screen, img_anim=vars_2.img_ingame_bg_board, num_frames=6)
 anim_scroll_music_but = Anim(vars_2.screen, img_anim=vars_2.img_scroll_but_sound, num_frames=5)
 anim_scroll_sound_but = Anim(vars_2.screen, img_anim=vars_2.img_scroll_but_sound, num_frames=5)
 anim_scratch = Anim(surface=vars_2.screen, img_anim=vars_2.img_ingame_scratch, num_frames=13)
-
-# Buttons #
-# but_menu_play = Button(vars_2.screen, 200, 50, vars_2.disp_w*0.5, vars_2.disp_h*0.7, (130, 96, 94), (179, 104, 100), 'Play', vars_2.font_menu_but)
-# but_menu_quit = Button(vars_2.screen, 200, 50, vars_2.disp_w*0.5, vars_2.disp_h*0.8, (130, 96, 94), (179, 104, 100), 'Quit', vars_2.font_menu_but)
-# but_ingame_menu = Button(vars_2.screen, 100, 25, vars_2.disp_w*0.9, vars_2.disp_h*0.05, (130, 96, 94), (179, 104, 100), 'Menu', vars_2.font_ingame_but, act_margin=3)
-# but_gameover_play = Button(vars_2.screen, 200, 50, vars_2.disp_w*0.3, vars_2.disp_h*0.6, (130, 96, 94), (179, 104, 100), 'Play again', vars_2.font_menu_but, act_margin=3)
-# but_gameover_menu = Button(vars_2.screen, 200, 50, vars_2.disp_w*0.7, vars_2.disp_h*0.6, (130, 96, 94), (179, 104, 100), 'Main menu', vars_2.font_menu_but, act_margin=3)
-# but_scroll_resume = Button(vars_2.screen, 195, 30, vars_2.disp_w*0.5, vars_2.disp_h*0.3, (255, 255, 255), (255, 255, 255), 'Resume game', vars_2.font_scroll_menu_but, but_transp=True)
-# but_scroll_new = Button(vars_2.screen, 150, 30, vars_2.disp_w*0.49, vars_2.disp_h*0.4, (255, 255, 255), (255, 255, 255), 'New game', vars_2.font_scroll_menu_but, but_transp=True)
-# but_scroll_music = Button(vars_2.screen, 180, 30, vars_2.disp_w*0.52, vars_2.disp_h*0.5, (130, 96, 94), (179, 104, 100), 'Music', vars_2.font_scroll_menu_but, text_centered=(370, vars_2.disp_h*0.5+15), but_transp=True)
-# but_scroll_sound = Button(vars_2.screen, 175, 30, vars_2.disp_w*0.52, vars_2.disp_h*0.6, (130, 96, 94), (179, 104, 100), 'Sound', vars_2.font_scroll_menu_but, text_centered=(375, vars_2.disp_h*0.6+15), but_transp=True)
-# but_scroll_main = Button(vars_2.screen, 150, 30, vars_2.disp_w*0.5, vars_2.disp_h*0.7, (255, 255, 255), (255, 255, 255), 'Main menu', vars_2.font_scroll_menu_but, but_transp=True)
-# but_verify_yes_main = Button(vars_2.screen, 80, 25, vars_2.disp_w*0.43, vars_2.disp_h*0.525, (130, 96, 94), (179, 104, 100), 'Yes', vars_2.font_verify_but)
-# but_verify_no = Button(vars_2.screen, 80, 25, vars_2.disp_w*0.57, vars_2.disp_h*0.525, (130, 96, 94), (179, 104, 100), 'No', vars_2.font_verify_but)
-# but_accept = Button(vars_2.screen, 80, 25, vars_2.disp_w*0.5, vars_2.disp_h*0.525, (130, 96, 94), (179, 104, 100), 'Accept', vars_2.font_verify_but)

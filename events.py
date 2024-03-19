@@ -20,11 +20,17 @@ def event_handler(event):
     
     # TESTING
     if event.type == pg.KEYDOWN:
+        if event.key == pg.K_ESCAPE:
+            vars.popup = "ingame_menu"
+            
         if event.key == pg.K_SPACE:
-            vars.tries -= 1
+            vars.game.tries -= 1
+        
+        if event.key == pg.K_MINUS:
+            vars.game.new_game(1)
 
-        if any(pg.key.name(event.key) in sublist for sublist in vars.dif_rare):
-            if pg.key.name(event.key) in vars.word:
+        if any(pg.key.name(event.key) in sublist for sublist in vars.word.letters_rarity):
+            if pg.key.name(event.key) in vars.game.word:
                 print("key:", pg.key.name(event.key))
                 for letter in vars.letters_properties:
                     if letter["letter"] == pg.key.name(event.key):
@@ -35,7 +41,7 @@ def event_handler(event):
                 #     pg.mixer_music.stop()
                 #     won()
             else:                                                            # if not in 'vars.char_list'
-                vars.tries -= 1
+                vars.game.tries -= 1
                 # pop_instance = Anim(vars.screen, vars.img_ingame_pop, num_frames=7)
                 # pop_instance.anim_pop()
                 # if vars.tries <= 0:
