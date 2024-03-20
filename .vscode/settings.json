@@ -6,8 +6,11 @@
         "gameover",
         "inact",
         "ingame",
+        "inmenu",
         "KEYDOWN",
         "MOUSEBUTTONDOWN",
-        "pygame"
+        "ornot",
+        "pygame",
+        "rects"
     ]
 }

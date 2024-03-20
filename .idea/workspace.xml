@@ -1700,7 +1700,7 @@
       <change afterPath="$PROJECT_DIR$/funct.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vars.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/v.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

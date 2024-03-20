@@ -1,5 +1,6 @@
-from random_words import RandomWords
 import math
+from random_words import RandomWords
+from components.Text import Text
 
 class Word:
     def __init__(self, difficulty) -> None:
@@ -59,7 +60,7 @@ class Word:
         return word
 
     @staticmethod
-    def parse_word(disp, word, word_config_presets) -> dict:
+    def parse_word(disp: object, word: str) -> dict:
         """Extracts properties of the individual letters from a random word.
 
             Returns:
@@ -68,38 +69,43 @@ class Word:
                     - "guessed": A boolean indicating whether the letter has been guessed.
                     - "pos": A list of two integers representing the position of the letter.
         """
-        letter_dim, letter_gap = word_config_presets["letter"].values()
-        init_pos = {
-            "x": disp["w"] * 0.5 - ((((letter_dim["w"] + letter_gap) * len(word)) - letter_gap * 1.5) * 0.5),
-            "y": disp["h"] * 0.7
-            }
         letters_props = []
         for letter_index, letter in enumerate(word):
-            pos = (init_pos["x"] + (letter_dim["w"] + letter_gap) * letter_index + letter_gap * 0.5, disp["h"] * 0.75)
             letter_props = {
                 "letter": letter,
                 "guessed": False,
-                "pos": pos
             }
             letters_props.append(letter_props)
-        
         return letters_props
 
+    @staticmethod
+    def generate_letter_texts_objs(disp: object, letters_properties: list, word_config_presets: dict) -> list:
+        letter_dim, letter_gap = word_config_presets["letter"].values()
+        init_pos = {
+            "x": disp.w * 0.5 - ((((letter_dim["w"] + letter_gap) * len(word)) - letter_gap * 1.5) * 0.5),
+            "y": disp.h * 0.78
+            }
+        pos = (init_pos["x"] + (letter_dim["w"] + letter_gap) * letter_index + letter_gap * 0.5, disp.h * 0.5)
+        # pos = (init_pos["x"] + (letter_dim["w"] + letter_gap) * letter_index + letter_gap * 0.5, init_pos["y"])
+        letter_text_objects = []
+        for letter_props in letters_properties:
+            letter_text_objects.append(Text(disp=disp, text=letter_props["letter"], pos=pos))
+        return letter_text_objects
 
-    #     if letter in vars.removable_char_list:
+    #     if letter in v.removable_char_list:
     #         anim_scratch.anim_scratch(letter)
     #     else:
-    #         for index, char1 in enumerate(vars.char_list):
-    #             if len(vars.removable_char_list) > 0:
+    #         for index, char1 in enumerate(v.char_list):
+    #             if len(v.removable_char_list) > 0:
                     
     #                 # If 'char1' is not guessed blit the cover
-    #                 if char1 in vars.removable_char_list:
-    #                     self.surface.blit(vars.img_ingame_scratch, vars.letter_pos[index], (0, 0, 32, 50))
+    #                 if char1 in v.removable_char_list:
+    #                     self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 0, 32, 50))
                         
     #                 # If 'char1' is guessed blit the underline
     #                 else:
-    #                     self.surface.blit(vars.img_ingame_scratch, vars.letter_pos[index], (0, 600, 32, 50))
+    #                     self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 600, 32, 50))
                         
     #             # If all the letters are guessed (empty removable_char_list), blit underlines
     #             else:
-    #                 self.surface.blit(vars.img_ingame_scratch, vars.letter_pos[index], (0, 600, 32, 50))
+    #                 self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 600, 32, 50))

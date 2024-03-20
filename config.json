@@ -1,7 +1,7 @@
 {
     "name": "hang_the_witch",
     "full_name": "Hang The Witch",
-    "icon": "data/images/icon_hang.png",
+    "icon": "data/images/icon.png",
     "disp": {
         "dim": {
             "w": 800,

@@ -106,9 +106,9 @@ def game():
 				f_sorting()
 				diff_menu()
 				vars_2.tries = 10
-				# print(vars.random_word)
-				# print(len(vars.random_word))
-				# print(vars.words)
+				# print(v.random_word)
+				# print(len(v.random_word))
+				# print(v.words)
 				vars_2.new_game = False
 			scr = 'game'
 
@@ -349,7 +349,7 @@ def actions(event):
 					if len(vars_2.removable_char_list) == 0:
 						vars_2.pg.mixer_music.stop()
 						won()
-				else:                                                            # if not in 'vars.char_list'
+				else:                                                            # if not in 'v.char_list'
 					vars_2.tries -= 1
 					pop_instance = Anim(vars_2.screen, vars_2.img_ingame_pop, num_frames=7)
 					pop_instance.anim_pop()

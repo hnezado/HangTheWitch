@@ -2,7 +2,7 @@ from pygame import Surface, Rect, draw, SRCALPHA, mouse
 
 class Button:
     def __init__(self, surface, width, height, x, y, i_color, a_color, text, font, enabled=True, i_font_color=(0, 0, 0),
-                a_font_color=(255, 0, 0), act_margin=6, but_transp=False, text_centered=None):
+                a_font_color=(255, 0, 0), act_margin=6, btn_transp=False, text_centered=None, fn=lambda: None):
         self.surface = surface
         self.width = width
         self.height = height
@@ -16,12 +16,13 @@ class Button:
         self.i_font_color = i_font_color
         self.a_font_color = a_font_color
         self.act_margin = act_margin
-        self.inact_rectangle = self.x, self.y, self.width, self.height
+        self.inact_rect = self.x, self.y, self.width, self.height
         
         # Sets default active zone margin with the option to modify it:
-        self.act_rectangle = self.x+self.act_margin, self.y+self.act_margin, self.width-self.act_margin*2, self.height-self.act_margin*2
-        self.but_transp = but_transp
+        self.act_rect = self.x+self.act_margin, self.y+self.act_margin, self.width-self.act_margin*2, self.height-self.act_margin*2
+        self.btn_transp = btn_transp
         self.text_centered = text_centered
+        self.fn = fn
 
 
     def text_object_but(self, txt, txt_font, fg_color, x, y):
@@ -37,22 +38,22 @@ class Button:
         '''It draws the button with the text (text itself, text font and text color), button size and position given in the arguments'''
 
         if self.enabled:
-            if self.but_transp:
+            if self.btn_transp:
                 surf = Surface((self.width, self.height), SRCALPHA)
                 surf.fill((255, 255, 255, 0))
                 self.surface.blit(surf, (self.x, self.y))
                 text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.i_font_color, self.x, self.y)
-                if Rect(self.inact_rectangle).collidepoint(mouse.get_pos()):
+                if Rect(self.inact_rect).collidepoint(mouse.get_pos()):
                     text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.a_font_color, self.x, self.y)
                 self.surface.blit(text_surface, text_rectangle)
             else:
-                draw.rect(self.surface, self.i_color, self.inact_rectangle)
+                draw.rect(self.surface, self.i_color, self.inact_rect)
                 text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.i_font_color, self.x, self.y)
-                if Rect(self.inact_rectangle).collidepoint(mouse.get_pos()):
-                    draw.rect(self.surface, self.a_color, self.act_rectangle)
+                if Rect(self.inact_rect).collidepoint(mouse.get_pos()):
+                    draw.rect(self.surface, self.a_color, self.act_rect)
                     text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.a_font_color, self.x, self.y)
                 self.surface.blit(text_surface, text_rectangle)
         else:
-            draw.rect(self.surface, (150, 150, 150), self.inact_rectangle)
+            draw.rect(self.surface, (150, 150, 150), self.inact_rect)
             text_surface, text_rectangle = self.text_object_but(self.text, self.font, (80, 80, 80), self.x, self.y)
             self.surface.blit(text_surface, text_rectangle)

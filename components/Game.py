@@ -1,110 +1,77 @@
-from functions import text_object
+from components.Text import Text
 from components.Word import Word
 
 
 class Game:
-	def __init__(self, disp, media, images, buttons, word_config_presets) -> None:
+	def __init__(self, disp, word_config_presets) -> None:
 		self.disp = disp
-		self.media = media
-		self.images = images
-		self.gallow = self.get_frames(self.images["ingame_gallows"], 11)
-		self.gallow["pos"] = self.get_gallow_pos()
-		self.scratchs = self.get_frames(self.images["ingame_scratch"], 13)
+		self.images = None
+		self.fonts = None
+		self.gallow = None
+		self.gallow_pos = None
+		self.scratch = None
 		self.tries = 5
+		self.tries_buffer = -1
 		self.word_config_presets = word_config_presets
-		self.buttons = buttons
+		self.texts = None
+		self.buttons = None
 		self.word = ""
 		self.letters_properties = []
+		self.letters_texts = []
 
-	@staticmethod
-	def get_frames(img, frames_num):
-		img_rect = img.get_rect()
-		props = {}
-		props["w"] = img_rect.width
-		props["h"] = img_rect.height / frames_num
-		props["frames"] = list([(0, props["h"] * frame, props["w"], props["h"]) for frame in range(frames_num)])
-		return props
+	def update(self, images, fonts, texts, buttons):
+		"""This method is called after loading all the content"""
+		self.images = images
+		self.fonts = fonts
+		self.gallow = self.images["ingame_gallow"]
+		self.gallow_pos = self.get_gallow_pos()
+		self.scratch = images["ingame_scratch"]
+		self.texts = texts
+		self.buttons = buttons
 
 	def get_gallow_pos(self) -> tuple:
-		pos = (self.disp["w"]*0.5-self.gallow["w"]*0.5, self.disp["h"]*0.4-self.gallow["h"]*0.5)
+		pos = (self.disp.w*0.5-self.gallow.w*0.5, self.disp.h*0.45-self.gallow.h*0.5)
 		return pos
 
 	def display(self):
-		self.disp["disp"].blit(self.images["ingame_bg_board"], (0, 0))
-		self.disp["disp"].blit(self.images["ingame_witch_bg"], (0, 0))
-		text_object(self.disp["disp"], 'Remaining tries: ', txt_font=self.media.fonts["ingame_tries"], pos=(self.disp["w"]*0.47, self.disp["h"]*0.07), fg_color=(150, 0, 0))
-		text_object(self.disp["disp"], txt='{}'.format(self.tries), txt_font=self.media.fonts["ingame_tries"], pos=(self.disp["w"]*0.62, self.disp["h"]*0.07), fg_color=(150, 0, 0))
+		# Backgrounds
+		self.disp.scr.blit(self.images["ingame_bg"].img, (0, 0))
+		self.disp.scr.blit(self.images["ingame_gallow_bg"].img, (0, 0))
 
-		# Display Gallow
-		self.disp["disp"].blit(self.images["ingame_gallows"], self.gallow["pos"], self.gallow["frames"][10-self.tries])
+		# Gallow
+		self.disp.scr.blit(self.gallow.img, self.gallow_pos, self.gallow.frames[10-self.tries])
 
-		# Display Word
-		for letter_props in self.letters_properties:
-			text_object(surface=self.disp["disp"], txt=letter_props["letter"], pos=letter_props["pos"])
+		# Word
+		for letter_text in self.letters_texts:
+			letter_text.display()
 
-		# Display Covers (anim)
+		# Covers (anim)
 		for letter_props in self.letters_properties:
 			if not letter_props["guessed"]:
-				pos = [letter_props["pos"][0]-self.word_config_presets["letter"]["dim"]["w"]*0.5, letter_props["pos"][1]-self.word_config_presets["letter"]["dim"]["h"]*0.5]
-				self.disp["disp"].blit(self.images["ingame_scratch"], pos, self.scratchs["frames"][11])
-        
-        # Sub-components
-		for button in self.buttons:
-			button.display()
+				scratch_pos = [letter_props["pos"][0]-self.word_config_presets["letter"]["dim"]["w"]*0.5, letter_props["pos"][1]-self.word_config_presets["letter"]["dim"]["h"]*0.5]
+				self.disp.scr.blit(self.scratch.img, scratch_pos, self.scratch.frames[11])
 
-	def toggle_dif_menu(self):
-		pass
+        # Sub-components
+		if self.tries_buffer != self.tries:
+			self.update_tries()
+		for text in self.texts["game"].values():
+			text.display()
+		self.buttons["game"]["menu"].display()
+
+	def update_tries(self):
+		self.texts["game"]["tries"] = Text(
+      		disp=self.disp,
+        	text=self.tries,
+			font=self.fonts["ingame_tries"],
+			pos=(self.disp.w * 0.65, self.disp.h * 0.05),
+			fg_color=(150, 0, 0)
+      	)
+		self.tries_buffer = self.tries
 
 	def new_game(self, dif):
-		word_instance = Word(dif)
-		self.word = word_instance.generate_word()
-		self.letters_properties = word_instance.parse_word(disp=self.disp, word=self.word, word_config_presets=self.word_config_presets
+		w = Word(dif)
+		self.word = w.generate_word()
+		self.letters_properties = w.parse_word(disp=self.disp, word=self.word, word_config_presets=self.word_config_presets
 		)
+		self.letters_texts = w.generate_letter_texts_objs(disp=self.disp, letters_properties=self.letters_properties)
 		print("word:", self.word)
-
-# class Dif:
-# 	def __init__(self, surface=vars_2.screen, bg_surface=vars_2.img_scroll_dif, but_width=30, but_height=40,
-# 				num_buttons=10, margin=60):
-# 		self.surface = surface
-# 		self.disp_w, self.disp_h = self.surface.get_size()
-# 		self.bg_surface = bg_surface
-# 		self.but_width = but_width
-# 		self.but_height = but_height
-# 		self.num_buttons = num_buttons
-# 		self.margin = margin
-
-# 	def diff_blit(self):
-# 		'''It blits the difficulty buttons on the dif choice menu'''
-# 		bg_surface_rect = self.bg_surface.get_rect()
-# 		self.surface.blit(self.bg_surface, (self.disp_w*0.5-bg_surface_rect.width*0.5, self.disp_h*0.5-bg_surface_rect.height*0.5))
-# 		text_object(self.surface, 'Choose difficulty', txt_font=vars_2.font_dif_txt, pos=(self.disp_w*0.5, self.disp_h*0.32))
-
-# 		for button in range(int(self.num_buttons*0.5)):
-# 			b_dif = Button(self.surface, self.but_width, self.but_height, ((self.disp_w*0.5-(self.but_width+self.margin)
-# 							*(self.num_buttons*0.25))+(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*button,
-# 							bg_surface_rect.height*0.65, (130, 96, 94), (179, 104, 100), str(button+1), vars_2.font_dif_but,
-# 							text_centered=(((self.disp_w*0.5-(self.but_width+self.margin)*(self.num_buttons*0.25))+
-# 							(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*button,
-# 							bg_surface_rect.height*0.65+self.but_height*0.5+4))
-# 			b_dif.drawing()
-# 			if len(vars_2.dif_but_list) < self.num_buttons:
-# 				vars_2.dif_but_list.append(b_dif)
-# 		for button in range(int(self.num_buttons*0.5), self.num_buttons):
-# 			b_dif = Button(self.surface, self.but_width, self.but_height, ((self.disp_w*0.5-(self.but_width+self.margin)
-# 							*(self.num_buttons*0.25))+(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*
-# 							(button-self.num_buttons*0.5), bg_surface_rect.height*0.85, (130, 96, 94), (179, 104, 100),
-# 							str(button+1), vars_2.font_dif_but,
-# 							text_centered=(((self.disp_w*0.5-(self.but_width+self.margin)*(self.num_buttons*0.25))+
-# 							(self.but_width+self.margin)*0.5)+(self.but_width+self.margin)*(button-self.num_buttons*0.5),
-# 							bg_surface_rect.height*0.85+self.but_height*0.5+4))
-# 			b_dif.drawing()
-# 			if len(vars_2.dif_but_list) < self.num_buttons:
-# 				vars_2.dif_but_list.append(b_dif)
-
-# 	def f_randomize(self):
-# 		'''Generates a random word from the chosen difficulty list'''
-
-# 		diff_choice = vars_2.dif_all[vars_2.diff_num_choice-1]
-# 		vars_2.random_word = vars_2.r.choice(diff_choice)
-# 		vars_2.char_list = list([char for char in vars_2.random_word])
-# 		vars_2.removable_char_list = list([char for char in vars_2.random_word])

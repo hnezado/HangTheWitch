@@ -1,31 +1,29 @@
 import os
 import pygame as pg
+from components.Media import Media
+from components.Components import Components
 
 # General
 pg.init()
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 clock = pg.time.Clock()
 ticks = 30
-config = {}
-disp = {}
+config = None
+disp = None
+active_win = "game"
+music_on, sound_on = True, True
 
-media = None
-
-# Media
-fonts = {}
-images = {}
-sounds = {}
-music = {}
-
-# Components
-buttons = {}
-animations = {}
+# Main Elements
+main_menu = None
+dif = None
 game = None
 ingame_menu = None
-popup_verify = None
+popups = {}
 
-# Other
-active_win = "game"
-popup = ""
-bg_faded = False
-music_on, sound_on = True, True
+# Media
+media = Media()
+
+# Components
+comps = Components()
+animations = {}
+buttons = {}

@@ -1,7 +1,6 @@
 import json
 import asyncio
-import variables as vars
-import functions as fn
+import variables as v
 import engine as ng
 from events import event_manager
 
@@ -10,44 +9,44 @@ def initialize():
     
     # Loads the config file
     with open('config.json') as f:
-        vars.config = json.load(f)
-    
+        v.config = json.load(f)
+        
     ng.init_vars()
-    ng.update()
 
 def main():
     while True:
         event_manager()
         show_main_menu()
+        show_dif_menu()
         show_game()
         show_ingame_menu()
         show_popup()
         
-        vars.pg.display.update()
-        vars.clock.tick(vars.ticks)
+        v.pg.display.update()
+        v.clock.tick(v.ticks)
         
 def show_main_menu():
-    pass
+    if v.active_win == "main_menu":
+        pass
+
+def show_dif_menu():
+    if v.active_win == "dif_menu":
+        v.disp.scr.blit(v.media.images["ingame_bg"].img, (0, 0))
+        v.disp.scr.blit(v.media.images["dif_scroll"].img, (0, 0))
 
 def show_game():
     """Shows the game window"""
     
-    if vars.active_win == "game":
-        if vars.game.word:
-            vars.game.display()
-        else: # Show difficulties menu when there is no word selected
-            vars.disp["disp"].blit(vars.images["ingame_bg_board"], (0, 0))
-            vars.buttons["ingame_menu"].display()
-            vars.disp["disp"].blit(vars.images["scroll_dif"], (0, 0))
+    if v.active_win == "game":
+        v.game.display()
+            
 
 def show_ingame_menu():
-    vars.ingame_menu.display()
+    v.ingame_menu.display()
 
 def show_popup():
-    if vars.popup == "confirmation":
-        pass
-    elif vars.popup == "ingame_menu":
-        pass
+    for popup in v.popups.values():
+        popup.display()
 
 if __name__ == '__main__':
     initialize()
