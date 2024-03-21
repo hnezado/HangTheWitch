@@ -24,8 +24,8 @@ class Button:
         self.text_centered = text_centered
         self.fn = fn
 
-
-    def text_object_but(self, txt, txt_font, fg_color, x, y):
+    # TODO Esto hay que cambiarlo, por probablemente objetos Text()
+    def text_object(self, txt, txt_font, fg_color, x, y):
         '''It renders the font with a text, text font, and text color centering it on the button by default'''
 
         text_surface = txt_font.render(txt, True, fg_color)
@@ -42,18 +42,18 @@ class Button:
                 surf = Surface((self.width, self.height), SRCALPHA)
                 surf.fill((255, 255, 255, 0))
                 self.surface.blit(surf, (self.x, self.y))
-                text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.i_font_color, self.x, self.y)
+                text_surface, text_rectangle = self.text_object(self.text, self.font, self.i_font_color, self.x, self.y)
                 if Rect(self.inact_rect).collidepoint(mouse.get_pos()):
-                    text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.a_font_color, self.x, self.y)
+                    text_surface, text_rectangle = self.text_object(self.text, self.font, self.a_font_color, self.x, self.y)
                 self.surface.blit(text_surface, text_rectangle)
             else:
                 draw.rect(self.surface, self.i_color, self.inact_rect)
-                text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.i_font_color, self.x, self.y)
+                text_surface, text_rectangle = self.text_object(self.text, self.font, self.i_font_color, self.x, self.y)
                 if Rect(self.inact_rect).collidepoint(mouse.get_pos()):
                     draw.rect(self.surface, self.a_color, self.act_rect)
-                    text_surface, text_rectangle = self.text_object_but(self.text, self.font, self.a_font_color, self.x, self.y)
+                    text_surface, text_rectangle = self.text_object(self.text, self.font, self.a_font_color, self.x, self.y)
                 self.surface.blit(text_surface, text_rectangle)
         else:
             draw.rect(self.surface, (150, 150, 150), self.inact_rect)
-            text_surface, text_rectangle = self.text_object_but(self.text, self.font, (80, 80, 80), self.x, self.y)
+            text_surface, text_rectangle = self.text_object(self.text, self.font, (80, 80, 80), self.x, self.y)
             self.surface.blit(text_surface, text_rectangle)

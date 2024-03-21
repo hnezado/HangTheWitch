@@ -34,7 +34,7 @@ def init_vars():
 def generate_main_elements():
     # v.main_menu = MainMenu()
     # v.dif_menu = DifMenu()
-    v.game = Game(disp=v.disp, word_config_presets=v.config["word"])
+    v.game = Game(disp=v.disp, letter_conf=v.config["letter"])
     v.ingame_menu = IngameMenu(disp=v.disp)
     # v.pop # Este requiere varias declaraciones
 

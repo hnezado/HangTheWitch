@@ -1,9 +1,11 @@
 import math
 from random_words import RandomWords
-from components.Text import Text
+from components.Letter import Letter
 
 class Word:
-    def __init__(self, difficulty) -> None:
+    def __init__(self, disp, letter_conf, difficulty) -> None:
+        self.disp = disp
+        self.letter_conf = letter_conf
         self.rw = RandomWords()
         self.difficulty = difficulty
         self.letters_rarity = [
@@ -13,12 +15,18 @@ class Word:
             ['y', 'g', 'p', 'b', 'v'],
             ['k', 'q', 'j', 'x', 'z']
         ]
+        self.word = "estoesunapalabramuylarga"
+        # self.word = "prueba"
+        # self.word = self.generate_word()
+        self.letters = []
+        self.parse_word()
+        self.calculate_letter_pos()
 
-    def generate_word(self) -> None:
+    def generate_word(self):
         """Generates a random word that meets predefined criteria for word difficulty.
     
             This function continuously creates a random word and checks its length and letter rarity against specified conditions, iterating until all conditions are satisfied.
-
+            
             Returns:
                 str: A randomly generated word that conforms to the preset word difficulty criteria.
         """
@@ -56,56 +64,37 @@ class Word:
                 dif = (selected_group + 1) * 2
                 if self.difficulty in (dif-1, dif):
                     break
-        
         return word
 
-    @staticmethod
-    def parse_word(disp: object, word: str) -> dict:
+    def parse_word(self):
         """Extracts properties of the individual letters from a random word.
 
             Returns:
                 dict: A dictionary containing properties of each letter, including:
                     - "letter": The letter itself (string).
                     - "guessed": A boolean indicating whether the letter has been guessed.
-                    - "pos": A list of two integers representing the position of the letter.
         """
-        letters_props = []
-        for letter_index, letter in enumerate(word):
-            letter_props = {
-                "letter": letter,
-                "guessed": False,
-            }
-            letters_props.append(letter_props)
-        return letters_props
+        for letter_str in self.word:
+            letter = Letter(disp=self.disp, txt=letter_str)
+            # self.word_width += letter.text_surf.rect.w + self.letter_conf["gap"]
+            self.letters.append(letter)
 
-    @staticmethod
-    def generate_letter_texts_objs(disp: object, letters_properties: list, word_config_presets: dict) -> list:
-        letter_dim, letter_gap = word_config_presets["letter"].values()
-        init_pos = {
-            "x": disp.w * 0.5 - ((((letter_dim["w"] + letter_gap) * len(word)) - letter_gap * 1.5) * 0.5),
-            "y": disp.h * 0.78
-            }
-        pos = (init_pos["x"] + (letter_dim["w"] + letter_gap) * letter_index + letter_gap * 0.5, disp.h * 0.5)
-        # pos = (init_pos["x"] + (letter_dim["w"] + letter_gap) * letter_index + letter_gap * 0.5, init_pos["y"])
-        letter_text_objects = []
-        for letter_props in letters_properties:
-            letter_text_objects.append(Text(disp=disp, text=letter_props["letter"], pos=pos))
-        return letter_text_objects
+    def calculate_letter_pos(self):
+        letter_w = self.letter_conf["dim"]["w"]
+        gap = self.letter_conf["gap"]
+        # word_w = sum([l.text_surf.w for l in self.letters])
+        word_w = sum([letter_w for _ in self.letters])
+        print("word_w:", word_w)
+        initial_pos = (self.disp.w * 0.5 - word_w * 0.5, self.disp.h * 0.78)
+        print("initial_pos:", initial_pos)
+        for letter_index, letter in enumerate(self.letters):
+            # pos = (initial_pos[0] + letter_w * letter_index, initial_pos[1])
+            pos = (initial_pos[0] + (letter_w * letter_index), initial_pos[1])
+            # pos = (0, 0)
+            letter.text_surf.rect.center = pos
+            # letter.text_surf.get_rect_centered()
 
-    #     if letter in v.removable_char_list:
-    #         anim_scratch.anim_scratch(letter)
-    #     else:
-    #         for index, char1 in enumerate(v.char_list):
-    #             if len(v.removable_char_list) > 0:
-                    
-    #                 # If 'char1' is not guessed blit the cover
-    #                 if char1 in v.removable_char_list:
-    #                     self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 0, 32, 50))
-                        
-    #                 # If 'char1' is guessed blit the underline
-    #                 else:
-    #                     self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 600, 32, 50))
-                        
-    #             # If all the letters are guessed (empty removable_char_list), blit underlines
-    #             else:
-    #                 self.surface.blit(v.img_ingame_scratch, v.letter_pos[index], (0, 600, 32, 50))
+    def display(self):
+        for letter in self.letters:
+            # print(f'ancho de {letter.txt}: {letter.text_surf.w}')
+            letter.text_surf.display()

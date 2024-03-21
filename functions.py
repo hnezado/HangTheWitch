@@ -12,16 +12,6 @@ def f_quit():
 	pg.quit()
 	quit()
 
-def text_object(surface, txt, txt_font=None, pos=(0, 0), fg_color=(0, 0, 0)):
-	'''Renders the font with a text, text font, text color and displays it in the given position'''
-
-	if txt_font == None:
-		font = pg.font.Font(txt_font, 45)
-	else:
-		font = txt_font
-	text_surface = font.render(txt, True, fg_color)
-	surface.blit(text_surface, text_surface.get_rect(center=pos))
-
 def click(fn):
 	def wrapper():
 		v.media.sounds["btn_click"].play()
