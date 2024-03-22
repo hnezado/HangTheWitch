@@ -42,4 +42,11 @@ def event_handler(event):
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if pg.Rect(v.comps.buttons["game"]["menu"].inact_rect).collidepoint(event.pos):
                         v.ingame_menu.opened = True
-
+                if event.type == pg.KEYDOWN:
+                    if any(pg.key.name(event.key) in sublist for sublist in v.game.word.letters_rarity):
+                        for ind, letter in enumerate(v.game.word.letters):
+                            if pg.key.name(event.key) == letter.txt:
+                                if not letter.guessed:
+                                    letter.guessed = True
+                                    v.game.word.covers[ind].start_anim()
+                                    

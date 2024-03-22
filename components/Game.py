@@ -9,8 +9,7 @@ class Game:
 		self.fonts = None
 		self.gallow = None
 		self.gallow_pos = None
-		self.scratch = None
-		self.tries = 10
+		self.tries = 5
 		self.tries_buffer = -1
 		self.letter_conf = letter_conf
 		self.texts = None
@@ -23,7 +22,6 @@ class Game:
 		self.fonts = fonts
 		self.gallow = self.images["ingame_gallow"]
 		self.gallow_pos = self.get_gallow_pos()
-		self.scratch = images["ingame_scratch"]
 		self.texts = texts
 		self.buttons = buttons
 
@@ -43,13 +41,6 @@ class Game:
 		if self.word:
 			self.word.display()
 
-			# Covers (anim)
-			for letter in self.word.letters:
-				if not letter.guessed:
-					cover_pos = letter.text_surf.pos
-					self.scratch.img.get_rect(center=cover_pos)
-					self.disp.scr.blit(self.scratch.img, cover_pos, self.scratch.frames[11])
-
         # Sub-components
 		if self.tries_buffer != self.tries:
 			self.update_tries()
@@ -68,5 +59,5 @@ class Game:
 		self.tries_buffer = self.tries
 
 	def new_game(self, dif):
-		self.word = Word(disp=self.disp, letter_conf=self.letter_conf, difficulty=dif)
+		self.word = Word(disp=self.disp, scratch=self.images["ingame_scratch"], letter_conf=self.letter_conf, difficulty=dif)
 		print("word:", self.word.word)

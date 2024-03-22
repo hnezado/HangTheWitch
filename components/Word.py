@@ -1,10 +1,12 @@
 import math
 from random_words import RandomWords
 from components.Letter import Letter
+from components.Animation import Animation
 
 class Word:
-    def __init__(self, disp, letter_conf, difficulty) -> None:
+    def __init__(self, disp, scratch, letter_conf, difficulty) -> None:
         self.disp = disp
+        self.scratch = scratch
         self.letter_conf = letter_conf
         self.rw = RandomWords()
         self.difficulty = difficulty
@@ -15,12 +17,14 @@ class Word:
             ['y', 'g', 'p', 'b', 'v'],
             ['k', 'q', 'j', 'x', 'z']
         ]
-        self.word = "estoesunapalabramuylarga"
+        # self.word = "palabramuylarga"
         # self.word = "prueba"
-        # self.word = self.generate_word()
+        self.word = self.generate_word()
         self.letters = []
+        self.covers = []
         self.parse_word()
         self.calculate_letter_pos()
+        self.generate_covers()
 
     def generate_word(self):
         """Generates a random word that meets predefined criteria for word difficulty.
@@ -82,19 +86,22 @@ class Word:
     def calculate_letter_pos(self):
         letter_w = self.letter_conf["dim"]["w"]
         gap = self.letter_conf["gap"]
-        # word_w = sum([l.text_surf.w for l in self.letters])
-        word_w = sum([letter_w for _ in self.letters])
-        print("word_w:", word_w)
-        initial_pos = (self.disp.w * 0.5 - word_w * 0.5, self.disp.h * 0.78)
-        print("initial_pos:", initial_pos)
+        word_w = sum([letter_w for _ in self.letters]) + (gap * (len(self.word) - 1))
+        initial_pos = (self.disp.w * 0.5 - word_w * 0.5 + letter_w * 0.5, self.disp.h * 0.78)
         for letter_index, letter in enumerate(self.letters):
-            # pos = (initial_pos[0] + letter_w * letter_index, initial_pos[1])
-            pos = (initial_pos[0] + (letter_w * letter_index), initial_pos[1])
-            # pos = (0, 0)
+            pos = (initial_pos[0] + (letter_w + gap) * letter_index, initial_pos[1])
             letter.text_surf.rect.center = pos
-            # letter.text_surf.get_rect_centered()
+            
+    def generate_covers(self):
+        for letter in self.letters:
+            if not letter.guessed:
+                letter_pos = letter.text_surf.rect.center
+                img_dim = self.scratch.w, self.scratch.h
+                scratch_pos = (letter_pos[0] - img_dim[0] * 0.5, letter_pos[1] - img_dim[1] * 0.5)
+                self.covers.append(Animation(disp=self.disp, image=self.scratch, pos=scratch_pos, delay=2, reset_frame=False))
 
     def display(self):
         for letter in self.letters:
-            # print(f'ancho de {letter.txt}: {letter.text_surf.w}')
             letter.text_surf.display()
+        for cover in self.covers:
+            cover.display()
