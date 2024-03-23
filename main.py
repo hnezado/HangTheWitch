@@ -14,6 +14,7 @@ def initialize():
     ng.init_vars()
 
 def main():
+    ng.goto_element("main_menu")
     while True:
         event_manager()
         show_main_menu()

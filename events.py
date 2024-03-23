@@ -22,7 +22,12 @@ def event_handler(event):
     if any([popup.opened for popup in v.popups.values()]):
         pass
     else:
-        if v.active_win == "game":
+        if v.active_win == "main_menu":
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    ng.goto_element("game")
+                    
+        elif v.active_win == "game":
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     v.ingame_menu.opened = not v.ingame_menu.opened
@@ -43,10 +48,4 @@ def event_handler(event):
                     if pg.Rect(v.comps.buttons["game"]["menu"].inact_rect).collidepoint(event.pos):
                         v.ingame_menu.opened = True
                 if event.type == pg.KEYDOWN:
-                    if any(pg.key.name(event.key) in sublist for sublist in v.game.word.letters_rarity):
-                        for ind, letter in enumerate(v.game.word.letters):
-                            if pg.key.name(event.key) == letter.txt:
-                                if not letter.guessed:
-                                    letter.guessed = True
-                                    v.game.word.covers[ind].start_anim()
-                                    
+                    v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), fail=v.game.failed_guess)

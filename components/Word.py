@@ -1,4 +1,5 @@
 import math
+from typing import Callable
 from random_words import RandomWords
 from components.Letter import Letter
 from components.Animation import Animation
@@ -21,6 +22,7 @@ class Word:
         # self.word = "prueba"
         self.word = self.generate_word()
         self.letters = []
+        self.letters_txt = []
         self.covers = []
         self.parse_word()
         self.calculate_letter_pos()
@@ -82,6 +84,7 @@ class Word:
             letter = Letter(disp=self.disp, txt=letter_str)
             # self.word_width += letter.text_surf.rect.w + self.letter_conf["gap"]
             self.letters.append(letter)
+            self.letters_txt.append(letter.txt)
 
     def calculate_letter_pos(self):
         letter_w = self.letter_conf["dim"]["w"]
@@ -105,3 +108,15 @@ class Word:
             letter.text_surf.display()
         for cover in self.covers:
             cover.display()
+
+    def event_check_letter(self, pushed_letter: str, fail: Callable[[], None]) -> None:
+        """Checks if the pushed letter is in the generated word"""
+        if any(pushed_letter in sublist for sublist in self.letters_rarity):
+            if pushed_letter in self.letters_txt:
+                for ind, letter in enumerate(self.letters):
+                    if pushed_letter == letter.txt:
+                        if not letter.guessed:
+                            letter.guessed = True
+                            self.covers[ind].start_anim()
+            else:
+                fail()

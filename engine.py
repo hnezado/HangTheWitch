@@ -38,6 +38,17 @@ def generate_main_elements():
     v.ingame_menu = IngameMenu(disp=v.disp)
     # v.pop # Este requiere varias declaraciones
 
+def goto_element(elem):
+    v.active_win = elem
+    if elem == "main_menu":
+        pg.mixer.music.fadeout(2000)
+        pg.mixer.music.load(v.media.musics["menu_wind"])
+    elif elem == "game":
+        pg.mixer.music.fadeout(2000)
+        pg.mixer.music.load(v.media.musics["ingame_music"])
+    if v.music_on:
+        pg.mixer.music.play(loops=-1, fade_ms=2000)
+
 def generate_media():
     # Fonts
     media.add_font(name="menu_title", path="data/fonts/feral.ttf", size=120)
@@ -109,8 +120,9 @@ def update_main_elements():
 
     # Game
     v.game.update(
-        images=media.images,
         fonts=media.fonts,
+        images=media.images,
+        sounds=media.sounds,
         texts=comps.texts,
         buttons=comps.buttons
         )

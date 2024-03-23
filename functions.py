@@ -33,11 +33,11 @@ def toggle_music():
 	if v.music_on:
 		v.comps.animations["inmenu_toggle_music"].start_anim()
 		v.music_on = False
-		pg.mixer.music.set_volume(1)
+		pg.mixer.music.set_volume(0)
 	else:
 		v.comps.animations["inmenu_toggle_music"].start_anim(mode="descend")
 		v.music_on = True
-		pg.mixer.music.set_volume(0)
+		pg.mixer.music.set_volume(1)
 
 @click
 def toggle_sound():

@@ -40,7 +40,7 @@ class Animation:
                         if self.reset_frame:
                             self.frame = 0
                         self.anim_counter += 1
-                        if self.anim_counter >= self.anim_times:
+                        if not self.anim_times == -1 and self.anim_counter >= self.anim_times:
                             self.stop_anim()
                 
             elif self.anim_in_progress == "descend":
