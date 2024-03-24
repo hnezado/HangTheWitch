@@ -1,13 +1,54 @@
-# class Dif:
-# 	def __init__(self, surface=vars_2.screen, bg_surface=vars_2.img_scroll_dif, but_width=30, but_height=40,
-# 				num_buttons=10, margin=60):
-# 		self.surface = surface
-# 		self.disp_w, self.disp_h = self.surface.get_size()
-# 		self.bg_surface = bg_surface
-# 		self.but_width = but_width
-# 		self.but_height = but_height
-# 		self.num_buttons = num_buttons
-# 		self.margin = margin
+from components.Text import Text
+from components.Button import Button
+
+class Dif:
+    def __init__(self, disp, dif_btn_dim=(30, 40), gap=60):
+        self.disp = disp
+        self.fonts = None
+        self.img_scroll = None
+        self.pos_scroll = None
+        self.btn_menu = None
+        self.dif_btn_dim = dif_btn_dim
+        self.gap = gap
+        self.dif_btns = None
+
+    def update(self, fonts, images, buttons):
+        self.fonts = fonts
+        self.images = images
+        self.pos_scroll = (
+            self.disp.w * 0.5 - images["dif_scroll"].w * 0.5,
+            self.disp.h * 0.5 - images["dif_scroll"].h * 0.5
+        )
+        self.btn_menu = buttons["game"]["menu"]
+        self.txt_choose = Text(
+            disp=self.disp,
+            text='Choose difficulty',
+            font=self.fonts["dif_txt"]
+        )
+        self.txt_choose.pos = (self.disp.w * 0.5 - self.txt_choose.w * 0.5,
+                 self.disp.h * 0.35 - self.txt_choose.h * 0.5)
+        self.dif_btns = self.generate_dif_btns()
+    
+    def generate_dif_btns(self):
+        btns = []
+        w = self.dif_btn_dim[0]
+        init_x = self.disp.w * 0.5 - (w * 5 + self.gap * 4) * 0.5 + 20
+        for i in range(10):
+            y = self.disp.h * 0.65 if i // 5 else self.disp.h * 0.5
+            pos = (init_x + (w + self.gap) * (i % 5), y)
+            btns.append(Button(surface=self.disp.scr, width=self.dif_btn_dim[0], height=self.dif_btn_dim[1], x=pos[0], y=pos[1], i_color=(130, 96, 94), a_color=(179, 104, 100), text=str(i+1), font=self.fonts["dif_btn"]))
+        return btns
+    
+    def display(self):
+        self.disp.scr.blit(self.images["ingame_bg"].img, (0, 0))
+        self.disp.scr.blit(self.images["dif_scroll"].img, self.pos_scroll)
+        self.txt_choose.display()
+
+        # Buttons
+        self.btn_menu.display()
+        for btn in self.dif_btns:
+            btn.display()
+
 
 # 	def diff_blit(self):
 # 		'''It blits the difficulty buttons on the dif choice menu'''
@@ -36,11 +77,3 @@
 # 			b_dif.drawing()
 # 			if len(vars_2.dif_but_list) < self.num_buttons:
 # 				vars_2.dif_but_list.append(b_dif)
-
-# 	def f_randomize(self):
-# 		'''Generates a random word from the chosen difficulty list'''
-
-# 		diff_choice = vars_2.dif_all[vars_2.diff_num_choice-1]
-# 		vars_2.random_word = vars_2.r.choice(diff_choice)
-# 		vars_2.char_list = list([char for char in vars_2.random_word])
-# 		vars_2.removable_char_list = list([char for char in vars_2.random_word])

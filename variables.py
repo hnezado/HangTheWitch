@@ -10,7 +10,7 @@ clock = pg.time.Clock()
 ticks = 30
 config = None
 disp = None
-active_win = "intro"
+active_win = ""
 music_on, sound_on = True, True
 
 # Main Elements

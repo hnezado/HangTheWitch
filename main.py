@@ -14,11 +14,10 @@ def initialize():
     ng.init_vars()
 
 def main():
-    ng.goto_element("main_menu")
     while True:
         event_manager()
         show_main_menu()
-        show_dif_menu()
+        show_dif()
         show_game()
         show_ingame_menu()
         show_popup()
@@ -28,12 +27,11 @@ def main():
         
 def show_main_menu():
     if v.active_win == "main_menu":
-        pass
+        v.main_menu.display()
 
-def show_dif_menu():
-    if v.active_win == "dif_menu":
-        v.disp.scr.blit(v.media.images["ingame_bg"].img, (0, 0))
-        v.disp.scr.blit(v.media.images["dif_scroll"].img, (0, 0))
+def show_dif():
+    if v.active_win == "dif":
+        v.dif.display()
 
 def show_game():
     """Shows the game window"""

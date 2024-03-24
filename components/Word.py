@@ -5,9 +5,10 @@ from components.Letter import Letter
 from components.Animation import Animation
 
 class Word:
-    def __init__(self, disp, scratch, letter_conf, difficulty) -> None:
+    def __init__(self, disp, scratch, scratch_snd, letter_conf, difficulty) -> None:
         self.disp = disp
         self.scratch = scratch
+        self.scratch_snd = scratch_snd
         self.letter_conf = letter_conf
         self.rw = RandomWords()
         self.difficulty = difficulty
@@ -109,14 +110,13 @@ class Word:
         for cover in self.covers:
             cover.display()
 
-    def event_check_letter(self, pushed_letter: str, fail: Callable[[], None]) -> None:
+    def event_check_letter(self, pushed_letter: str, success: Callable[[], None], fail: Callable[[], None]) -> None:
         """Checks if the pushed letter is in the generated word"""
         if any(pushed_letter in sublist for sublist in self.letters_rarity):
             if pushed_letter in self.letters_txt:
                 for ind, letter in enumerate(self.letters):
                     if pushed_letter == letter.txt:
                         if not letter.guessed:
-                            letter.guessed = True
-                            self.covers[ind].start_anim()
+                            success(ind)
             else:
                 fail()

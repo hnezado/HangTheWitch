@@ -1,22 +1,67 @@
 import pygame as pg
 import variables as v
+from components.Word import Word
 
 def update_components():
+    v.comps.buttons["main"]["play"].fn = play
+    v.comps.buttons["main"]["quit"].fn = quit
     v.comps.buttons["inmenu"]["resume"].fn = resume_game
     v.comps.buttons["inmenu"]["new"].fn = new_game
     v.comps.buttons["inmenu"]["music"].fn = toggle_music
     v.comps.buttons["inmenu"]["sound"].fn = toggle_sound
     v.comps.buttons["inmenu"]["main"].fn = goto_main_menu
+    for btn in v.dif.dif_btns:
+        btn.fn = create_new_game
 
-def f_quit():
-	pg.quit()
-	quit()
+def start_intro():
+    # v.active_win = "intro"
+    v.active_win = "dif"
+    print("screen:", v.active_win)
+    pg.mixer.music.load(v.media.musics["menu_wind"])
+    if v.music_on:
+        pg.mixer.music.play(loops=-1, fade_ms=2000)
+
+def goto_element(elem):
+    if v.active_win != elem:
+        v.active_win = elem
+        print("going to:", elem)
+        v.ingame_menu.opened = False
+        if elem == "main_menu":
+            pg.mixer.music.fadeout(2000)
+            pg.mixer.music.load(v.media.musics["menu_wind"])
+            if v.music_on:
+                pg.mixer.music.play(loops=-1, fade_ms=2000)
+
+        elif elem == "dif":
+            pg.mixer.music.fadeout(2000)
+            pg.mixer.music.load(v.media.musics["ingame_music"])
+            if v.music_on:
+                pg.mixer.music.play(loops=-1, fade_ms=2000)
+        elif elem == "game":
+            pass
 
 def click(fn):
-	def wrapper():
+	def wrapper(*args, **kwargs):
 		v.media.sounds["btn_click"].play()
-		return fn()
+		return fn(*args, **kwargs)
 	return wrapper
+
+@click
+def play():
+    goto_element("dif")
+
+@click
+def quit():
+    pg.quit()
+    quit()
+
+@click
+def open_menu():
+    v.ingame_menu.opened = True
+
+@click
+def close_menu():
+    v.ingame_menu.opened = False
 
 @click
 def resume_game():
@@ -24,7 +69,8 @@ def resume_game():
 
 @click
 def new_game():
-	pass
+    goto_element("dif")
+	# create_new_game(5)
 
 @click
 def toggle_music():
@@ -56,4 +102,19 @@ def toggle_sound():
 
 @click
 def goto_main_menu():
-    pass
+    goto_element("main_menu")
+
+@click
+def create_new_game(dif):
+	v.game.is_victory = False
+	v.game.is_gameover = False
+	v.game.tries = 10
+	v.game.word = Word(
+		disp=v.disp,
+		scratch=v.media.images["ingame_scratch"],
+		scratch_snd=v.media.sounds["ingame_scratch"],
+		letter_conf=v.config["letter"],
+		difficulty=dif
+	)
+	print("word:", v.game.word.word)
+	goto_element("game")

@@ -1,13 +1,15 @@
 import pygame as pg
 import variables as v
 from variables import media, comps
+from components.MainMenu import MainMenu
+from components.Dif import Dif
 from components.Game import Game
 from components.IngameMenu import IngameMenu
 from components.Popup import Popup
 from components.Text import Text
 from components.Animation import Animation
 from components.Button import Button
-from functions import update_components
+from functions import update_components, start_intro
 
 
 class Disp:
@@ -30,24 +32,15 @@ def init_vars():
     generate_components()
     update_main_elements()
     update_components()
+    
+    start_intro()
 
 def generate_main_elements():
-    # v.main_menu = MainMenu()
-    # v.dif_menu = DifMenu()
-    v.game = Game(disp=v.disp, letter_conf=v.config["letter"])
+    v.main_menu = MainMenu(disp=v.disp)
+    v.dif = Dif(disp=v.disp)
+    v.game = Game(disp=v.disp)
     v.ingame_menu = IngameMenu(disp=v.disp)
     # v.pop # Este requiere varias declaraciones
-
-def goto_element(elem):
-    v.active_win = elem
-    if elem == "main_menu":
-        pg.mixer.music.fadeout(2000)
-        pg.mixer.music.load(v.media.musics["menu_wind"])
-    elif elem == "game":
-        pg.mixer.music.fadeout(2000)
-        pg.mixer.music.load(v.media.musics["ingame_music"])
-    if v.music_on:
-        pg.mixer.music.play(loops=-1, fade_ms=2000)
 
 def generate_media():
     # Fonts
@@ -56,7 +49,7 @@ def generate_media():
     media.add_font(name="ingame_tries", path="data/fonts/Haunting Attraction.ttf", size=40)
     media.add_font(name="ingame_btn", path="data/fonts/feral.ttf", size=20, emphasis="bold")
     media.add_font(name="ingame_menu_btn", path="data/fonts/parchment.ttf", size=40, emphasis="bold")
-    media.add_font(name="won", path="data/fonts/Haunting Attraction.ttf", size=60)
+    media.add_font(name="victory", path="data/fonts/Haunting Attraction.ttf", size=60)
     media.add_font(name="gameover", path="data/fonts/Haunting Attraction.ttf", size=75)
     media.add_font(name="dif_txt", path="data/fonts/parchment.ttf", size=70)
     media.add_font(name="dif_btn", path="data/fonts/parchment.ttf", size=40)
@@ -85,7 +78,7 @@ def generate_media():
     media.add_sound(name="menu_btn_play", path="data/sounds/rattle.ogg")
     media.add_sound(name="ingame_scratch", path="data/sounds/scratch.ogg")
     media.add_sound(name="ingame_pop", path="data/sounds/pop.ogg")
-    media.add_sound(name="won", path="data/sounds/witch_laugh.ogg")
+    media.add_sound(name="victory", path="data/sounds/witch_laugh.ogg")
     media.add_sound(name="gameover", path="data/sounds/gameover.ogg")
     media.add_sound(name="scroll", path="data/sounds/scroll.ogg")
     media.add_music(name="menu_wind", path="data/sounds/wind.ogg")
@@ -117,6 +110,19 @@ def generate_components():
     comps.buttons["popup"]["cancel"] = Button(v.disp.scr, 150, 30, v.disp.w*0.5, v.disp.h*0.7, (255, 255, 255), (255, 255, 255), 'Cancel', media.fonts["popup_btn"], btn_transp=True)
 
 def update_main_elements():    
+
+    # Main Menu
+    v.main_menu.update(
+        images=media.images,
+        buttons=comps.buttons
+    )
+    
+    # Difficulty Menu
+    v.dif.update(
+        fonts=media.fonts,
+        images=media.images,
+        buttons=comps.buttons
+    )
 
     # Game
     v.game.update(

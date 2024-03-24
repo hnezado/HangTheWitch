@@ -5,7 +5,7 @@ from components.Animation import Animation
 
 
 class Game:
-	def __init__(self, disp, letter_conf) -> None:
+	def __init__(self, disp) -> None:
 		self.disp = disp
 		self.fonts = None
 		self.images = None
@@ -15,10 +15,12 @@ class Game:
 		self.pop = None
 		self.tries = 10
 		self.tries_buffer = -1
-		self.letter_conf = letter_conf
 		self.texts = None
 		self.buttons = None
 		self.word = None
+		self.is_victory = False
+		self.is_gameover = False
+		self.victory_texts = None
 
 	def update(self, fonts, images, sounds, texts, buttons):
 		"""This method is called after loading all the content"""
@@ -30,6 +32,14 @@ class Game:
 		self.pops = self.generate_pops()
 		self.texts = texts
 		self.buttons = buttons
+		self.victory_texts = [
+			Text(self.disp, 'The Witch will live one more day', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.35), fg_color=(150, 50, 50)),
+			Text(self.disp, 'CONGRATULATIONS !', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.2), fg_color=(150, 50, 50))
+		]
+		self.gameover_texts = [
+			Text(self.disp, 'The Witch Died', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.34), fg_color=(255, 0, 0)),
+			Text(self.disp, 'GAME OVER', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.48), fg_color=(255, 0, 0)),
+		]
 
 	def get_gallow_pos(self) -> tuple:
 		pos = (self.disp.w*0.5-self.gallow.w*0.5, self.disp.h*0.45-self.gallow.h*0.5)
@@ -91,12 +101,42 @@ class Game:
 			text.display()
 		self.buttons["game"]["menu"].display()
 
-	def new_game(self, dif):
-		self.word = Word(disp=self.disp, scratch=self.images["ingame_scratch"], letter_conf=self.letter_conf, difficulty=dif)
-		print("word:", self.word.word)
+		# Victory and Gameover
+		if self.is_victory:
+			self.disp.scr.blit(self.images["fade"].img, (0, 0))
+			for txt in self.victory_texts:
+				txt.display()
+			for btn in self.buttons["game"].values():
+				btn.display()
+		elif self.is_gameover:
+			self.disp.scr.blit(self.images["fade"].img, (0, 0))
+			self.disp.scr.blit(self.images["gameover_brush"].img, (225, self.disp.h * 0.24))
+			for txt in self.gameover_texts:
+				txt.display()
+			for btn in self.buttons["game"].values():
+				btn.display()
+
+	def victory(self):
+		'''Displays victory screen'''
+
+		self.is_victory = True
+		self.sounds["victory"].play()
+
+	def gameover(self):
+		self.is_gameover = True
+		self.sounds["gameover"].play()
+
+	def success_guess(self, ind):
+		self.word.letters[ind].guessed = True
+		self.word.covers[ind].start_anim()
+		self.word.scratch_snd.play()
+		if all([l.guessed for l in self.word.letters]):
+			self.victory()
 
 	def failed_guess(self):
 		self.tries -= 1
 		self.sounds["ingame_pop"].play()
 		list(reversed(self.pops))[self.tries].start_anim()
+		if self.tries <= 0:
+			self.gameover()
 
