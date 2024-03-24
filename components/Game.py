@@ -33,12 +33,12 @@ class Game:
 		self.texts = texts
 		self.buttons = buttons
 		self.victory_texts = [
-			Text(self.disp, 'The Witch will live one more day', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.35), fg_color=(150, 50, 50)),
-			Text(self.disp, 'CONGRATULATIONS !', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.2), fg_color=(150, 50, 50))
+			Text(self.disp, 'The Witch will live one more day', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.45), fg_color=(150, 50, 50), centered=True),
+			Text(self.disp, 'CONGRATULATIONS !', font=self.fonts["victory"], pos=(self.disp.w * 0.5, self.disp.h * 0.3), fg_color=(150, 50, 50), centered=True)
 		]
 		self.gameover_texts = [
-			Text(self.disp, 'The Witch Died', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.34), fg_color=(255, 0, 0)),
-			Text(self.disp, 'GAME OVER', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.48), fg_color=(255, 0, 0)),
+			Text(self.disp, 'The Witch Died', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.34), fg_color=(255, 0, 0), centered=True),
+			Text(self.disp, 'GAME OVER', font=self.fonts["gameover"], pos=(self.disp.w * 0.5, self.disp.h * 0.48), fg_color=(255, 0, 0), centered=True),
 		]
 
 	def get_gallow_pos(self) -> tuple:

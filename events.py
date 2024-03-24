@@ -68,7 +68,11 @@ def event_handler(event):
                         if event.key == kp[i-1]:
                             fn.create_new_game(i)
                     ###################################################
-                    v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), success=v.game.success_guess, fail=v.game.failed_guess)
+                    if not v.game.is_victory and not v.game.is_gameover:
+                        v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), success=v.game.success_guess, fail=v.game.failed_guess)
                 if event.type == pg.MOUSEBUTTONDOWN:
-                        if pg.Rect(v.comps.buttons["game"]["menu"].inact_rect).collidepoint(event.pos):
-                            fn.open_menu()
+                        # if pg.Rect(v.comps.buttons["game"]["menu"].inact_rect).collidepoint(event.pos):
+                        #     fn.open_menu()
+                        for btn in v.comps.buttons["game"].values():
+                            if pg.Rect(btn.inact_rect).collidepoint(event.pos):
+                                btn.fn()

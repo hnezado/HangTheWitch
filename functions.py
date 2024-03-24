@@ -5,6 +5,9 @@ from components.Word import Word
 def update_components():
     v.comps.buttons["main"]["play"].fn = play
     v.comps.buttons["main"]["quit"].fn = quit
+    v.comps.buttons["game"]["menu"].fn = open_menu
+    v.comps.buttons["game"]["gameover_play"].fn = play
+    v.comps.buttons["game"]["gameover_menu"].fn = goto_main_menu
     v.comps.buttons["inmenu"]["resume"].fn = resume_game
     v.comps.buttons["inmenu"]["new"].fn = new_game
     v.comps.buttons["inmenu"]["music"].fn = toggle_music

@@ -11,13 +11,7 @@ class Text:
         self.rect = self.surface.get_rect()
         self.w, self.h = self.rect.w, self.rect.h
         self.centered = centered
-
-    def display(self) -> None:
-        '''Displays the text surface on the specified position'''
-        if self.centered:
-            self.disp.scr.blit(self.surface, self.rect)
-        else:
-            self.disp.scr.blit(self.surface, self.pos)
+        self.updated = False
 
     def get_surface(self) -> object:
         '''Generates the text using the specified font and color'''
@@ -26,3 +20,17 @@ class Text:
 
     def get_rect_centered(self):
         self.rect = self.surface.get_rect(center=self.pos)
+
+    def update(self):
+        self.updated = True
+        if self.centered:
+            self.rect.center = self.pos
+
+    def display(self) -> None:
+        '''Displays the text surface on the specified position'''
+        if not self.updated:
+            self.update()
+        if self.centered:
+            self.disp.scr.blit(self.surface, self.rect)
+        else:
+            self.disp.scr.blit(self.surface, self.pos)
