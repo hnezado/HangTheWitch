@@ -89,17 +89,11 @@ class Word:
 
     def calculate_letter_pos(self):
         letter_w = self.letter_conf["dim"]["w"]
-        print("letter_w:", letter_w)
         gap = self.letter_conf["gap"]
-        print("gap:", gap)
         word_w = (letter_w + gap) * (len(self.letters) - 1)
-        print("word_w:", word_w)
         initial_pos = (self.disp.w * 0.5 - word_w * 0.5, self.disp.h * 0.78)
-        print("calc_pos:", self.disp.w * 0.5, word_w * 0.5, self.disp.h * 0.78)
-        print("initial_pos:", initial_pos)
         for letter_index, letter in enumerate(self.letters):
             pos = (initial_pos[0] + (letter_w + gap) * letter_index, initial_pos[1])
-            print(f'position ({letter_index}): {pos}')
             letter.text_surf.pos = pos
             
     def generate_covers(self):

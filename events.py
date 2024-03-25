@@ -13,13 +13,24 @@ def event_handler(event):
     """Handles any event"""
     
     if event.type == pg.QUIT:
-        # fn.f_quit()
         pg.quit()
         quit()
 
-
     if any([popup.opened for popup in v.popups.values()]):
-        pass
+        for key, popup in v.popups.items():
+            if key == "quit_confirm":
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RETURN:
+                        fn.quit()
+                    if event.key == pg.K_ESCAPE:
+                        v.media.sounds["btn_click"].play()
+                        popup.opened = False
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    if pg.Rect(v.comps.buttons["popup"]["accept"].inact_rect).collidepoint(event.pos):
+                        fn.quit()
+                    if pg.Rect(v.comps.buttons["popup"]["cancel"].inact_rect).collidepoint(event.pos):
+                        v.media.sounds["btn_click"].play()
+                        popup.opened = False
     else:
         if v.ingame_menu.opened:
             if v.active_win in ["dif", "game"]:
@@ -39,8 +50,8 @@ def event_handler(event):
                         v.active_win = "main_menu"
             elif v.active_win == "main_menu":
                 if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_RIGHT:
-                        fn.goto_element("dif")
+                    if event.key == pg.K_ESCAPE:
+                        v.popups["quit_confirm"].opened = True
                 if event.type == pg.MOUSEBUTTONDOWN:
                     for btn in v.comps.buttons["main"].values():
                         if pg.Rect(btn.inact_rect).collidepoint(event.pos):
@@ -71,8 +82,6 @@ def event_handler(event):
                     if not v.game.is_victory and not v.game.is_gameover:
                         v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), success=v.game.success_guess, fail=v.game.failed_guess)
                 if event.type == pg.MOUSEBUTTONDOWN:
-                        # if pg.Rect(v.comps.buttons["game"]["menu"].inact_rect).collidepoint(event.pos):
-                        #     fn.open_menu()
                         for btn in v.comps.buttons["game"].values():
                             if pg.Rect(btn.inact_rect).collidepoint(event.pos):
                                 btn.fn()

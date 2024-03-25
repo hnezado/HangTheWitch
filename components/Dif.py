@@ -36,7 +36,13 @@ class Dif:
         for i in range(10):
             y = self.disp.h * 0.65 if i // 5 else self.disp.h * 0.5
             pos = (init_x + (w + self.gap) * (i % 5), y)
-            btns.append(Button(surface=self.disp.scr, width=self.dif_btn_dim[0], height=self.dif_btn_dim[1], x=pos[0], y=pos[1], i_color=(130, 96, 94), a_color=(179, 104, 100), text=str(i+1), font=self.fonts["dif_btn"]))
+            btns.append(Button(
+                disp=self.disp,
+                dim=(self.dif_btn_dim[0], self.dif_btn_dim[1]),
+                pos=pos,
+                text=str(i+1),
+                font=self.fonts["dif_btn"]
+            ))
         return btns
     
     def display(self):

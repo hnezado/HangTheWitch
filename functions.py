@@ -4,7 +4,7 @@ from components.Word import Word
 
 def update_components():
     v.comps.buttons["main"]["play"].fn = play
-    v.comps.buttons["main"]["quit"].fn = quit
+    v.comps.buttons["main"]["quit"].fn = open_popup_quit
     v.comps.buttons["game"]["menu"].fn = open_menu
     v.comps.buttons["game"]["gameover_play"].fn = play
     v.comps.buttons["game"]["gameover_menu"].fn = goto_main_menu
@@ -18,8 +18,8 @@ def update_components():
 
 def start_intro():
     # v.active_win = "intro"
-    v.active_win = "dif"
-    print("screen:", v.active_win)
+    v.active_win = "main_menu"
+    print("starting screen:", v.active_win)
     pg.mixer.music.load(v.media.musics["menu_wind"])
     if v.music_on:
         pg.mixer.music.play(loops=-1, fade_ms=2000)
@@ -54,7 +54,12 @@ def play():
     goto_element("dif")
 
 @click
+def open_popup_quit():
+    v.popups["quit_confirm"].opened = True
+
+@click
 def quit():
+    pg.time.delay(500)
     pg.quit()
     quit()
 

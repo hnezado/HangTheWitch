@@ -16,5 +16,5 @@ class MainMenu:
         # Buttons
         self.buttons["main"]["play"].display()
         self.buttons["main"]["quit"].display()
-
+        
 

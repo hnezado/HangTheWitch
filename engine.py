@@ -40,7 +40,9 @@ def generate_main_elements():
     v.dif = Dif(disp=v.disp)
     v.game = Game(disp=v.disp)
     v.ingame_menu = IngameMenu(disp=v.disp)
-    # v.pop # Este requiere varias declaraciones
+    v.popups["quit_confirm"] = Popup(disp=v.disp, text="Are you sure")
+    # v.popups["new_game_confirm"]
+    # v.popups["menu_confirm"]
 
 def generate_media():
     # Fonts
@@ -96,18 +98,18 @@ def generate_components():
     comps.animations["inmenu_toggle_sound"] = Animation(disp=v.disp, image=media.images["inmenu_toggle"], pos=(v.disp.w*0.57, v.disp.h*0.59), anim_times=1, reset_frame=False)
     
     # Buttons
-    comps.buttons["main"]["play"] = Button(v.disp.scr, 200, 50, v.disp.w*0.5, v.disp.h*0.7, (130, 96, 94), (179, 104, 100), 'Play', media.fonts["menu_btn"])
-    comps.buttons["main"]["quit"] = Button(v.disp.scr, 200, 50, v.disp.w*0.5, v.disp.h*0.8, (130, 96, 94), (179, 104, 100), 'Quit', media.fonts["menu_btn"])
-    comps.buttons["game"]["menu"] = Button(v.disp.scr, 100, 25, v.disp.w*0.9, v.disp.h*0.05, (130, 96, 94), (179, 104, 100), 'Menu', media.fonts["ingame_btn"], act_margin=3)
-    comps.buttons["game"]["gameover_play"] = Button(v.disp.scr, 200, 50, v.disp.w*0.3, v.disp.h*0.6, (130, 96, 94), (179, 104, 100), 'Play again', media.fonts["menu_btn"], act_margin=3)
-    comps.buttons["game"]["gameover_menu"] = Button(v.disp.scr, 200, 50, v.disp.w*0.7, v.disp.h*0.6, (130, 96, 94), (179, 104, 100), 'Main menu', media.fonts["menu_btn"], act_margin=3)
-    comps.buttons["inmenu"]["resume"] = Button(v.disp.scr, 195, 30, v.disp.w*0.5, v.disp.h*0.3, (255, 255, 255), (255, 255, 255), 'Resume game', media.fonts["ingame_menu_btn"], btn_transp=True)
-    comps.buttons["inmenu"]["new"] = Button(v.disp.scr, 150, 30, v.disp.w*0.49, v.disp.h*0.4, (255, 255, 255), (255, 255, 255), 'New game', media.fonts["ingame_menu_btn"], btn_transp=True)
-    comps.buttons["inmenu"]["music"] = Button(v.disp.scr, 180, 30, v.disp.w*0.52, v.disp.h*0.5, (130, 96, 94), (179, 104, 100), 'Music', media.fonts["ingame_menu_btn"], text_centered=(370, v.disp.h*0.5+15), btn_transp=True)
-    comps.buttons["inmenu"]["sound"] = Button(v.disp.scr, 175, 30, v.disp.w*0.52, v.disp.h*0.6, (130, 96, 94), (179, 104, 100), 'Sound', media.fonts["ingame_menu_btn"], text_centered=(375, v.disp.h*0.6+15), btn_transp=True)
-    comps.buttons["inmenu"]["main"] = Button(v.disp.scr, 150, 30, v.disp.w*0.5, v.disp.h*0.7, (255, 255, 255), (255, 255, 255), 'Main menu', media.fonts["ingame_menu_btn"], btn_transp=True)
-    comps.buttons["popup"]["accept"] = Button(v.disp.scr, 150, 30, v.disp.w*0.5, v.disp.h*0.7, (255, 255, 255), (255, 255, 255), 'Accept', media.fonts["popup_btn"], btn_transp=True)
-    comps.buttons["popup"]["cancel"] = Button(v.disp.scr, 150, 30, v.disp.w*0.5, v.disp.h*0.7, (255, 255, 255), (255, 255, 255), 'Cancel', media.fonts["popup_btn"], btn_transp=True)
+    comps.buttons["main"]["play"] = Button(v.disp, (200, 50), (v.disp.w*0.5, v.disp.h*0.75), 'Play', media.fonts["menu_btn"])
+    comps.buttons["main"]["quit"] = Button(v.disp, (200, 50), (v.disp.w*0.5, v.disp.h*0.85), 'Quit', media.fonts["menu_btn"])
+    comps.buttons["game"]["menu"] = Button(v.disp, (100, 25), (v.disp.w*0.9, v.disp.h*0.05), 'Menu', media.fonts["ingame_btn"], act_margin=3)
+    comps.buttons["game"]["gameover_play"] = Button(v.disp, (200, 50), (v.disp.w*0.3, v.disp.h*0.6), 'Play again', media.fonts["menu_btn"], act_margin=3)
+    comps.buttons["game"]["gameover_menu"] = Button(v.disp, (200, 50), (v.disp.w*0.7, v.disp.h*0.6), 'Main menu', media.fonts["menu_btn"], act_margin=3)
+    comps.buttons["inmenu"]["resume"] = Button(v.disp, (195, 30), (v.disp.w*0.5, v.disp.h*0.3), 'Resume game', media.fonts["ingame_menu_btn"], i_color=(255, 255, 255), a_color=(255, 255, 255), btn_transp=True)
+    comps.buttons["inmenu"]["new"] = Button(v.disp, (150, 30), (v.disp.w*0.49, v.disp.h*0.4), 'New game', media.fonts["ingame_menu_btn"], i_color=(255, 255, 255), a_color=(255, 255, 255), btn_transp=True)
+    comps.buttons["inmenu"]["music"] = Button(v.disp, (180, 30), (v.disp.w*0.52, v.disp.h*0.5), 'Music', media.fonts["ingame_menu_btn"], text_centered=(370, v.disp.h*0.5+15), btn_transp=True)
+    comps.buttons["inmenu"]["sound"] = Button(v.disp, (175, 30), (v.disp.w*0.52, v.disp.h*0.6), 'Sound', media.fonts["ingame_menu_btn"], text_centered=(375, v.disp.h*0.6+15), btn_transp=True)
+    comps.buttons["inmenu"]["main"] = Button(v.disp, (150, 30), (v.disp.w*0.5, v.disp.h*0.7), 'Main menu', media.fonts["ingame_menu_btn"], i_color=(255, 255, 255), a_color=(255, 255, 255), btn_transp=True)
+    comps.buttons["popup"]["accept"] = Button(v.disp, (80, 30), (0, 0), 'Accept', media.fonts["popup_btn"])
+    comps.buttons["popup"]["cancel"] = Button(v.disp, (80, 30), (0, 0), 'Cancel', media.fonts["popup_btn"])
 
 def update_main_elements():    
 
@@ -139,4 +141,11 @@ def update_main_elements():
         texts=comps.texts,
         animations=comps.animations,
         buttons=comps.buttons
+    )
+    
+    # Popup
+    v.popups["quit_confirm"].update(
+        fonts=v.media.fonts,
+        images=v.media.images,
+        buttons=v.comps.buttons
     )

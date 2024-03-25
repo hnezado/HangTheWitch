@@ -12,6 +12,7 @@
         "MOUSEBUTTONDOWN",
         "ornot",
         "pygame",
-        "rects"
+        "rects",
+        "SRCALPHA"
     ]
 }
