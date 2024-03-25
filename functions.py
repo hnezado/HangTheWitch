@@ -18,7 +18,7 @@ def update_components():
 
 def start_intro():
     # v.active_win = "intro"
-    v.active_win = "main_menu"
+    v.active_win = "dif"
     print("starting screen:", v.active_win)
     pg.mixer.music.load(v.media.musics["menu_wind"])
     if v.music_on:
@@ -51,6 +51,7 @@ def click(fn):
 
 @click
 def play():
+    print("play function")
     goto_element("dif")
 
 @click

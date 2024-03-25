@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Text:
-    def __init__(self, disp, text, font=None, pos=(0, 0), fg_color=(0, 0, 0), centered=False) -> None:
+    def __init__(self, disp, text, font=None, pos=(0, 0), fg_color=(20, 20, 20), centered=False) -> None:
         self.disp = disp
         self.text = str(text)
         self.font = pg.font.Font(font, 45) if not font else font
