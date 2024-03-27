@@ -41,7 +41,7 @@ def generate_main_elements():
     v.game = Game(disp=v.disp)
     v.ingame_menu = IngameMenu(disp=v.disp)
     v.popups["quit_confirm"] = Popup(disp=v.disp, text="Are you sure")
-    # v.popups["new_game_confirm"]
+    v.popups["new_game_confirm"] = Popup(disp=v.disp, text="Start new game")
     # v.popups["menu_confirm"]
 
 def generate_media():
@@ -108,8 +108,6 @@ def generate_components():
     comps.buttons["inmenu"]["music"] = Button(v.disp, (200, 20), (v.disp.w*0.51, v.disp.h*0.5), 'Music', media.fonts["ingame_menu_btn"], txt_pos_mod=(-40, 5), btn_transp=True)
     comps.buttons["inmenu"]["sound"] = Button(v.disp, (200, 20), (v.disp.w*0.515, v.disp.h*0.6), 'Sound', media.fonts["ingame_menu_btn"], txt_pos_mod=(-36, 5), btn_transp=True)
     comps.buttons["inmenu"]["main"] = Button(v.disp, (200, 20), (v.disp.w*0.5, v.disp.h*0.7), 'Main menu', media.fonts["ingame_menu_btn"], txt_pos_mod=(-15, 5), btn_transp=True)
-    comps.buttons["popup"]["accept"] = Button(v.disp, (80, 30), (0, 0), 'Accept', media.fonts["popup_btn"])
-    comps.buttons["popup"]["cancel"] = Button(v.disp, (80, 30), (0, 0), 'Cancel', media.fonts["popup_btn"])
 
 def update_main_elements():    
 
@@ -147,5 +145,12 @@ def update_main_elements():
     v.popups["quit_confirm"].update(
         fonts=v.media.fonts,
         images=v.media.images,
+        sound_btn_click=v.media.sounds["btn_click"],
+        buttons=v.comps.buttons
+    )
+    v.popups["new_game_confirm"].update(
+        fonts=v.media.fonts,
+        images=v.media.images,
+        sound_btn_click=v.media.sounds["btn_click"],
         buttons=v.comps.buttons
     )

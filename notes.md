@@ -17,4 +17,4 @@ tries: 9 -> frame: 1
 
 # TODO
 
-- Cambiar el método text_object de Button y utilizar objetos de Text()
+- rel_question_pos -> en popup para que sea en cada popup diferente

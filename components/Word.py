@@ -19,6 +19,7 @@ class Word:
             ['y', 'g', 'p', 'b', 'v'],
             ['k', 'q', 'j', 'x', 'z']
         ]
+        print("Creating Word() with dif:", self.difficulty)
         # self.word = "palabramuylarga"
         # self.word = "ab"
         self.word = self.generate_word()

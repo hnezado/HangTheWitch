@@ -35,12 +35,13 @@ class Button:
             self.inact_rect.h - self.act_margin * 2
         )
         self.text_surfaces = self.generate_text_surfaces()
-        self.fn = fn
         self.fn_buffer = None
+        self.fn = fn
+        print(f"init Button() fn: {self.fn} - fn_buffer: {self.fn_buffer}")
 
-    def __setattr__(self, __name: str, __value: Any) -> None:
-        super().__setattr__(__name, __value)
-        if __name == "pos":
+    def __setattr__(self, name: str, value: Any) -> None:
+        super().__setattr__(name, value)
+        if name == "pos":
             self.inact_rect = pg.Rect(
                 self.pos[0] - self.w * 0.5,
                 self.pos[1] - self.h * 0.5,
@@ -54,13 +55,16 @@ class Button:
                 self.inact_rect.h - self.act_margin * 2
             )
             self.text_surfaces = self.generate_text_surfaces()
-        elif __name == "fn":
-            self.fn_buffer = __value
-            super().__setattr__(__name, self.check_enabled)
+        elif name == "fn":
+            print(f"Setting {self.text} fn: {value} - fn_buffer: {self.fn_buffer}")
+            # print("Setting accept_btn: name:", name, "and value:", value.__name__)
+            self.fn_buffer = value
+            super().__setattr__(name, self.check_enabled)
+            print(f"All fn set -> fn: {self.fn}, fn_buffer: {self.fn_buffer}")
 
-    def check_enabled(self):
+    def check_enabled(self, *args, **kwargs):
         if self.enabled:
-            self.fn_buffer()
+            return self.fn_buffer(*args, **kwargs)
         else:
             return lambda: None
 

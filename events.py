@@ -17,20 +17,19 @@ def event_handler(event):
         quit()
 
     if any([popup.opened for popup in v.popups.values()]):
+        # for popup in v.popups.values():
         for key, popup in v.popups.items():
-            if key == "quit_confirm":
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_RETURN:
-                        fn.quit()
-                    if event.key == pg.K_ESCAPE:
-                        v.media.sounds["btn_click"].play()
-                        popup.opened = False
-                if event.type == pg.MOUSEBUTTONDOWN:
-                    if pg.Rect(v.comps.buttons["popup"]["accept"].inact_rect).collidepoint(event.pos):
-                        fn.quit()
-                    if pg.Rect(v.comps.buttons["popup"]["cancel"].inact_rect).collidepoint(event.pos):
-                        v.media.sounds["btn_click"].play()
-                        popup.opened = False
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_RETURN:
+                    popup.accept_btn.fn()
+                if event.key == pg.K_ESCAPE:
+                    popup.cancel_btn.fn()
+            if event.type == pg.MOUSEBUTTONDOWN:
+                if pg.Rect(popup.accept_btn.inact_rect).collidepoint(event.pos):
+                    print(f"popup {key} accept btn dict: {popup.accept_btn.__dict__}")
+                    popup.accept_btn.fn()
+                if pg.Rect(popup.cancel_btn.inact_rect).collidepoint(event.pos):
+                    popup.cancel_btn.fn()
     else:
         if v.ingame_menu.opened:
             if v.active_win in ["dif", "game"]:
@@ -67,18 +66,11 @@ def event_handler(event):
                         fn.open_menu()
                     for btn in v.dif.dif_btns:
                         if pg.Rect(btn.inact_rect).collidepoint(event.pos):
-                            btn.fn(int(btn.text))
+                            btn.fn(dif=int(btn.text))
             elif v.active_win == "game":
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         fn.open_menu()
-                    ###################################################
-                    # DEBUG - Generates word by difficulty with num-pad numbers
-                    kp = [pg.K_KP1, pg.K_KP2, pg.K_KP3, pg.K_KP4, pg.K_KP5, pg.K_KP6, pg.K_KP7, pg.K_KP8, pg.K_KP9, pg.K_KP0]
-                    for i in range(1, 11):
-                        if event.key == kp[i-1]:
-                            fn.create_new_game(i)
-                    ###################################################
                     if not v.game.is_victory and not v.game.is_gameover:
                         v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), success=v.game.success_guess, fail=v.game.failed_guess)
                 if event.type == pg.MOUSEBUTTONDOWN:

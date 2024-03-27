@@ -18,11 +18,12 @@ class Popup:
         self.font_btn = None
         self.rect_outer = pg.Rect(self.disp.w * 0.5 - 110, self.disp.h * 0.5 - 50, 220, 100)
         self.rect_inner = pg.Rect(self.disp.w * 0.5 - 105, self.disp.h * 0.5 - 45, 210, 90)
+        self.sound_btn_click = None
         self.accept_btn = None
         self.cancel_btn = None
         self.opened = False
 
-    def update(self, fonts, images, buttons):
+    def update(self, fonts, images, sound_btn_click, buttons):
         """This method is called after loading all the content"""
         self.fonts = fonts
         self.images = images
@@ -38,49 +39,31 @@ class Popup:
         self.question = self.images["question"]
         self.font_txt = self.fonts ["popup_txt"]
         self.font_btn = self.fonts["popup_btn"]
+        self.sound_btn_click = sound_btn_click
         
-        self.accept_btn = self.buttons["popup"]["accept"]
         if self.type == "verify":
+            self.accept_btn = Button(self.disp, (80, 30), (0, 0), 'Accept', self.fonts["popup_btn"])
             self.accept_btn.pos = (
                 self.rect_inner.x + self.padding + self.accept_btn.inact_rect.w * 0.5,
                 self.rect_inner.y + self.rect_inner.h - self.padding - self.accept_btn.inact_rect.h * 0.5
             )
-            self.cancel_btn = self.buttons["popup"]["cancel"]
+            self.cancel_btn = Button(self.disp, (80, 30), (0, 0), 'Cancel', self.fonts["popup_btn"])
+            self.cancel_btn.fn=self.close
             self.cancel_btn.pos = (
                 self.rect_inner.x + self.rect_inner.w - self.padding - self.cancel_btn.inact_rect.w * 0.5,
                 self.rect_inner.y + self.rect_inner.h - self.padding - self.cancel_btn.inact_rect.h * 0.5
             )
         else:
+            self.accept_btn = Button(self.disp, (80, 30), (0, 0), 'Accept', self.fonts["popup_btn"])
             self.accept_btn.pos = (
                 self.rect_inner.x + self.rect_inner.w * 0.5,
                 self.rect_inner.y + self.rect_inner.h * 0.7
             )
 
-    def generate_buttons(self):
-        buttons = []
-        if self.type == "verify":
-            buttons.append(Button(
-                disp=self.disp,
-                dim=(100, 50),
-                pos=(self.rect.x + self.rect.w * 0.3, self.rect.y + self.rect.h * 0.7),
-                text="Accept",
-                font=self.font_btn
-            ))
-            buttons.append(Button(
-                disp=self.disp,
-                dim=(100, 50),
-                pos=(self.rect.x + self.rect.w * 0.6, self.rect.y + self.rect.h * 0.7),
-                text="Cancel",
-                font=self.font_btn
-            ))
-        elif self.type == "info":
-            buttons.append(Button(
-                surface=self.disp.scr,
-                dim=(100, 50),
-                pos=(self.rect[0] + self.rect[0] * 0.5, self.rect[1] + self.rect[1] * 0.7),
-                text="Accept",
-                font=self.font_btn
-            ))
+    def close(self):
+        if self.opened:
+            self.sound_btn_click.play()
+            self.opened = False
 
     def display(self):
         if self.opened:

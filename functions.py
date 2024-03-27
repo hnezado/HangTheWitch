@@ -2,19 +2,26 @@ import pygame as pg
 import variables as v
 from components.Word import Word
 
+### General ###
 def update_components():
     v.comps.buttons["main"]["play"].fn = play
     v.comps.buttons["main"]["quit"].fn = open_popup_quit
+    for btn in v.dif.dif_btns:
+        btn.fn = create_new_game
     v.comps.buttons["game"]["menu"].fn = open_menu
     v.comps.buttons["game"]["gameover_play"].fn = play
     v.comps.buttons["game"]["gameover_menu"].fn = goto_main_menu
     v.comps.buttons["inmenu"]["resume"].fn = resume_game
-    v.comps.buttons["inmenu"]["new"].fn = new_game
+    v.comps.buttons["inmenu"]["new"].fn = open_popup_new_game
     v.comps.buttons["inmenu"]["music"].fn = toggle_music
     v.comps.buttons["inmenu"]["sound"].fn = toggle_sound
     v.comps.buttons["inmenu"]["main"].fn = goto_main_menu
-    for btn in v.dif.dif_btns:
-        btn.fn = create_new_game
+    # v.popups["quit_confirm"].accept_btn.fn = quit
+    v.popups["new_game_confirm"].accept_btn.fn = new_game # No lo coge!
+    print("fn_buffer:", v.popups["quit_confirm"].accept_btn.fn_buffer)
+    print("fn:", v.popups["quit_confirm"].accept_btn.fn)
+    print("fn_buffer:", v.popups["new_game_confirm"].accept_btn.fn_buffer)
+    print("fn:", v.popups["new_game_confirm"].accept_btn.fn)
 
 def start_intro():
     # v.active_win = "intro"
@@ -28,6 +35,8 @@ def goto_element(elem):
     if v.active_win != elem:
         v.active_win = elem
         print("going to:", elem)
+        for popup in v.popups.values():
+            popup.close()
         v.ingame_menu.opened = False
         if elem == "main_menu":
             pg.mixer.music.fadeout(2000)
@@ -44,19 +53,15 @@ def goto_element(elem):
             pass
 
 def click(fn):
-	def wrapper(*args, **kwargs):
+	def clicker(*args, **kwargs):
 		v.media.sounds["btn_click"].play()
 		return fn(*args, **kwargs)
-	return wrapper
+	return clicker
 
+### Main Menu ###
 @click
-def play():
-    print("play function")
+def play(*args, **kwargs):
     goto_element("dif")
-
-@click
-def open_popup_quit():
-    v.popups["quit_confirm"].opened = True
 
 @click
 def quit():
@@ -64,25 +69,44 @@ def quit():
     pg.quit()
     quit()
 
+### Difficulty Menu ###
 @click
-def open_menu():
+def create_new_game(*args, **kwargs):
+	v.game.is_victory = False
+	v.game.is_gameover = False
+	v.game.tries = 10
+	v.game.word = Word(
+		disp=v.disp,
+		scratch=v.media.images["ingame_scratch"],
+		scratch_snd=v.media.sounds["ingame_scratch"],
+		letter_conf=v.config["letter"],
+		difficulty=kwargs["dif"]
+	)
+	print("word:", v.game.word.word)
+	goto_element("game")
+
+### Game ###
+@click
+def open_menu(*args, **kwargs):
     v.ingame_menu.opened = True
 
 @click
 def close_menu():
     v.ingame_menu.opened = False
 
+### Ingame Menu ###
 @click
-def resume_game():
+def resume_game(*args, **kwargs):
     v.ingame_menu.opened = False
 
-@click
-def new_game():
+# @click
+def new_game(*args, **kwargs):
+    print("exec new_game fn")
     goto_element("dif")
 	# create_new_game(5)
 
 @click
-def toggle_music():
+def toggle_music(*args, **kwargs):
 	'''It enables or disables the music'''
 
 	if v.music_on:
@@ -95,7 +119,7 @@ def toggle_music():
 		pg.mixer.music.set_volume(1)
 
 @click
-def toggle_sound():
+def toggle_sound(*args, **kwargs):
 	'''It enables or disables the sound'''
 
 	if v.sound_on:
@@ -110,20 +134,14 @@ def toggle_sound():
 			snd.set_volume(1)
 
 @click
-def goto_main_menu():
+def goto_main_menu(*args, **kwargs):
     goto_element("main_menu")
 
+### Popups ###
 @click
-def create_new_game(dif):
-	v.game.is_victory = False
-	v.game.is_gameover = False
-	v.game.tries = 10
-	v.game.word = Word(
-		disp=v.disp,
-		scratch=v.media.images["ingame_scratch"],
-		scratch_snd=v.media.sounds["ingame_scratch"],
-		letter_conf=v.config["letter"],
-		difficulty=dif
-	)
-	print("word:", v.game.word.word)
-	goto_element("game")
+def open_popup_quit(*args, **kwargs):
+    v.popups["quit_confirm"].opened = True
+
+@click
+def open_popup_new_game(*args, **kwargs):
+    v.popups["new_game_confirm"].opened = True
