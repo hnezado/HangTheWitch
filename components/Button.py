@@ -46,7 +46,6 @@ class Button:
         self.text_surfaces = self.generate_text_surfaces()
         self.fn_buffer = None
         self.fn = fn
-        print(f"init Button() fn: {self.fn} - fn_buffer: {self.fn_buffer}")
 
     def __setattr__(self, name: str, value: Any) -> None:
         super().__setattr__(name, value)
@@ -65,11 +64,8 @@ class Button:
             )
             self.text_surfaces = self.generate_text_surfaces()
         elif name == "fn":
-            print(f"Setting {self.text} fn: {value} - fn_buffer: {self.fn_buffer}")
-            # print("Setting accept_btn: name:", name, "and value:", value.__name__)
             self.fn_buffer = value
             super().__setattr__(name, self.check_enabled)
-            print(f"All fn set -> fn: {self.fn}, fn_buffer: {self.fn_buffer}")
 
     def check_enabled(self, *args, **kwargs) -> Callable:
         if self.enabled:
@@ -134,5 +130,6 @@ class Button:
                 else:
                     self.text_surfaces["inact"].display()
         else:
-            draw.rect(self.disp.scr, (150, 150, 150), self.inact_rect)
+            if not self.btn_transp:
+                draw.rect(self.disp.scr, (150, 150, 150), self.inact_rect)
             self.text_surfaces["disabled"].display()
