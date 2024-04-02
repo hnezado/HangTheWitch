@@ -14,6 +14,7 @@ active_win = ""
 music_on, sound_on = True, True
 
 # Main Elements
+intro = None
 main_menu = None
 dif = None
 game = None

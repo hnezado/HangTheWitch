@@ -17,6 +17,7 @@ def initialize():
 def main():
     while True:
         event_manager()
+        show_intro()
         show_main_menu()
         show_dif()
         show_game()
@@ -25,6 +26,11 @@ def main():
         
         v.pg.display.update()
         v.clock.tick(v.ticks)
+
+
+def show_intro():
+    if v.active_win == "intro":
+        v.intro.display()
 
 
 def show_main_menu():

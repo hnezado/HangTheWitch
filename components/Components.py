@@ -8,6 +8,7 @@ class Components:
             "popup": {}
         }
         self.animations = {
+            "intro": {},
             "main": {},
             "game": {},
             "inmenu": {}
