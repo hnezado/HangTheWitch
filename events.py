@@ -2,6 +2,7 @@ import pygame as pg
 import variables as v
 import functions as fn
 
+
 # ONLY main.py must import this module
 
 def event_manager():
@@ -9,9 +10,10 @@ def event_manager():
     for event in pg.event.get():
         event_handler(event)
 
+
 def event_handler(event):
     """Handles any event"""
-    
+
     if event.type == pg.QUIT:
         pg.quit()
         quit()
@@ -19,17 +21,21 @@ def event_handler(event):
     if any([popup.opened for popup in v.popups.values()]):
         # for popup in v.popups.values():
         for key, popup in v.popups.items():
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_RETURN:
-                    popup.accept_btn.fn()
-                if event.key == pg.K_ESCAPE:
-                    popup.cancel_btn.fn()
-            if event.type == pg.MOUSEBUTTONDOWN:
-                if pg.Rect(popup.accept_btn.inact_rect).collidepoint(event.pos):
-                    print(f"popup {key} accept btn dict: {popup.accept_btn.__dict__}")
-                    popup.accept_btn.fn()
-                if pg.Rect(popup.cancel_btn.inact_rect).collidepoint(event.pos):
-                    popup.cancel_btn.fn()
+            if popup.opened:
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RETURN:
+                        popup.accept_btn.fn()
+                    if event.key == pg.K_ESCAPE:
+                        popup.cancel_btn.fn()
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    if pg.Rect(popup.accept_btn.inact_rect).collidepoint(event.pos):
+                        print(f"Accepting in popup {key}")
+                        print(f"Executing function: {popup.accept_btn.fn}")
+                        popup.accept_btn.fn()
+                    if pg.Rect(popup.cancel_btn.inact_rect).collidepoint(event.pos):
+                        print(f"Cancelling in popup {key}")
+                        print(f"Executing function: {popup.accept_btn.fn}")
+                        popup.cancel_btn.fn()
     else:
         if v.ingame_menu.opened:
             if v.active_win in ["dif", "game"]:
@@ -72,8 +78,9 @@ def event_handler(event):
                     if event.key == pg.K_ESCAPE:
                         fn.open_menu()
                     if not v.game.is_victory and not v.game.is_gameover:
-                        v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key), success=v.game.success_guess, fail=v.game.failed_guess)
+                        v.game.word.event_check_letter(pushed_letter=pg.key.name(event.key),
+                                                       success=v.game.success_guess, fail=v.game.failed_guess)
                 if event.type == pg.MOUSEBUTTONDOWN:
-                        for btn in v.comps.buttons["game"].values():
-                            if pg.Rect(btn.inact_rect).collidepoint(event.pos):
-                                btn.fn()
+                    for btn in v.comps.buttons["game"].values():
+                        if pg.Rect(btn.inact_rect).collidepoint(event.pos):
+                            btn.fn()

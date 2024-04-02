@@ -44,9 +44,21 @@ def generate_main_elements():
     v.dif = Dif(disp=v.disp)
     v.game = Game(disp=v.disp)
     v.ingame_menu = IngameMenu(disp=v.disp)
-    v.popups["quit_confirm"] = Popup(disp=v.disp, text="Are you sure")
-    v.popups["new_game_confirm"] = Popup(disp=v.disp, text="Start new game")
-    # v.popups["menu_confirm"]
+    v.popups["quit_confirm"] = Popup(
+        disp=v.disp,
+        text="Are you sure",
+        question_mod_pos=(-25, 5)
+    )
+    v.popups["new_game_confirm"] = Popup(
+        disp=v.disp,
+        text="Start new game",
+        question_mod_pos=(-10, 5)
+    )
+    v.popups["menu_confirm"] = Popup(
+        disp=v.disp,
+        text="Go to Main Menu",
+        question_mod_pos=(-10, 5)
+    )
 
 
 def generate_media():
@@ -205,15 +217,22 @@ def update_main_elements():
     )
 
     # Popup
-    v.popups["quit_confirm"].update(
-        fonts=v.media.fonts,
-        images=v.media.images,
-        sound_btn_click=v.media.sounds["btn_click"],
-        buttons=v.comps.buttons
-    )
-    v.popups["new_game_confirm"].update(
-        fonts=v.media.fonts,
-        images=v.media.images,
-        sound_btn_click=v.media.sounds["btn_click"],
-        buttons=v.comps.buttons
-    )
+    for popup in v.popups.values():
+        popup.update(
+            fonts=v.media.fonts,
+            images=v.media.images,
+            sound_btn_click=v.media.sounds["btn_click"],
+            buttons=v.comps.buttons
+        )
+    # v.popups["quit_confirm"].update(
+    #     fonts=v.media.fonts,
+    #     images=v.media.images,
+    #     sound_btn_click=v.media.sounds["btn_click"],
+    #     buttons=v.comps.buttons
+    # )
+    # v.popups["new_game_confirm"].update(
+    #     fonts=v.media.fonts,
+    #     images=v.media.images,
+    #     sound_btn_click=v.media.sounds["btn_click"],
+    #     buttons=v.comps.buttons
+    # )

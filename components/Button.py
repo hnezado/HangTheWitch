@@ -14,7 +14,7 @@ class Button:
                  act_margin=6,
                  btn_transp=False,
                  txt_pos_mod=None,
-                 fn=lambda: None):
+                 fn=lambda: print("empty fn")):
         self.disp = disp
         self.w, self.h = dim
         self.text = text

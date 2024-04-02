@@ -16,14 +16,17 @@ def update_components():
     v.comps.buttons["inmenu"]["new"].fn = open_popup_new_game
     v.comps.buttons["inmenu"]["music"].fn = toggle_music
     v.comps.buttons["inmenu"]["sound"].fn = toggle_sound
-    v.comps.buttons["inmenu"]["main"].fn = goto_main_menu
-    # v.popups["quit_confirm"].accept_btn.fn = quit
+    v.comps.buttons["inmenu"]["main"].fn = open_popup_main_menu
+    v.popups["quit_confirm"].accept_btn.fn = quit
     v.popups["new_game_confirm"].accept_btn.fn = new_game
+    v.popups["menu_confirm"].accept_btn.fn = goto_main_menu
+    for popup in v.popups.values():
+        popup.cancel_btn.fn = close_popup
 
 
 def start_intro():
     v.active_win = "intro"
-    # v.active_win = "dif"
+    v.active_win = "dif"
     print("starting screen:", v.active_win)
     pg.mixer.music.load(v.media.musics["menu_wind"])
     if v.music_on:
@@ -108,7 +111,7 @@ def resume_game(*args, **kwargs):
     v.ingame_menu.opened = False
 
 
-# @click
+@click
 def new_game(*args, **kwargs):
     print("exec new_game fn")
     goto_element("dif")
@@ -160,3 +163,14 @@ def open_popup_quit(*args, **kwargs):
 @click
 def open_popup_new_game(*args, **kwargs):
     v.popups["new_game_confirm"].opened = True
+
+
+@click
+def open_popup_main_menu(*args, **kwargs):
+    v.popups["menu_confirm"].opened = True
+
+
+@click
+def close_popup(*args, **kwargs):
+    for popup in v.popups.values():
+        popup.close()
