@@ -2,6 +2,7 @@ import pygame as pg
 from components.Text import Text
 from components.Button import Button
 
+
 class Popup:
     def __init__(self, disp, text, padding=10, type="verify") -> None:
         self.disp = disp

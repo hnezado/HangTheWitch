@@ -1,6 +1,7 @@
 import pygame as pg
 from components.Image import Image
 
+
 class Media:
     def __init__(self) -> None:
         self.fonts = {}

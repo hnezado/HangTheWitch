@@ -12,11 +12,13 @@ class Animation:
         self.next_frame_counter = 0
         self.anim_in_progress = False
 
-    def display(self):
+    def display(self) -> None:
+        """Displays the current animation frame"""
         self.update()
         self.disp.scr.blit(self.image.img, self.pos, self.image.frames[self.frame])
 
-    def start_anim(self, mode="ascend"):
+    def start_anim(self, mode="ascend") -> None:
+        """Starts the animation"""
         if mode == "ascend":
             self.frame = 0
         elif mode == "descend":
@@ -24,11 +26,13 @@ class Animation:
         self.next_frame_counter = 0
         self.anim_in_progress = mode
 
-    def stop_anim(self):
+    def stop_anim(self) -> None:
+        """Stops the animation"""
         self.anim_in_progress = False
         self.next_frame_counter = 0
 
-    def update(self):
+    def update(self) -> None:
+        """Updates the frame if conditions are met (loop number delay)"""
         if self.anim_in_progress:
             self.next_frame_counter += 1
             if self.anim_in_progress == "ascend":
@@ -53,6 +57,3 @@ class Animation:
                             self.frame = len(self.image.frames)-1
                         if self.anim_counter >= self.anim_times:
                             self.stop_anim()
-
-
-

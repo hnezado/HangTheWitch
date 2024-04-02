@@ -1,11 +1,20 @@
 import pygame as pg
-from typing import Any
+from typing import Any, Callable
 from pygame import Surface, Rect, draw, SRCALPHA, mouse
 from components.Text import Text
 
+
 class Button:
     def __init__(self, disp, dim, pos, text, font,
-                 i_color=(130, 96, 94), a_color=(179, 104, 100), enabled=True, i_font_color=(20, 20, 20), a_font_color=(200, 50, 50), act_margin=6, btn_transp=False, txt_pos_mod=None, fn=lambda: None):
+                 i_color=(130, 96, 94),
+                 a_color=(179, 104, 100),
+                 enabled=True,
+                 i_font_color=(20, 20, 20),
+                 a_font_color=(200, 50, 50),
+                 act_margin=6,
+                 btn_transp=False,
+                 txt_pos_mod=None,
+                 fn=lambda: None):
         self.disp = disp
         self.w, self.h = dim
         self.text = text
@@ -62,13 +71,14 @@ class Button:
             super().__setattr__(name, self.check_enabled)
             print(f"All fn set -> fn: {self.fn}, fn_buffer: {self.fn_buffer}")
 
-    def check_enabled(self, *args, **kwargs):
+    def check_enabled(self, *args, **kwargs) -> Callable:
         if self.enabled:
             return self.fn_buffer(*args, **kwargs)
         else:
             return lambda: None
 
-    def generate_text_surfaces(self):
+    def generate_text_surfaces(self) -> dict:
+        """Generates the surfaces for the button text"""
         text_surfaces = {}
         text_pos = (
                 self.inact_rect.x + self.inact_rect.w * 0.5,
@@ -80,14 +90,34 @@ class Button:
                 text_pos[1] + self.txt_pos_mod[1]
             )
             
-        text_surfaces["inact"] = Text(disp=self.disp, text=self.text, font=self.font, pos=text_pos, fg_color=self.i_font_color, centered=True)
-        text_surfaces["act"] = Text(disp=self.disp, text=self.text, font=self.font, pos=text_pos, fg_color=self.a_font_color, centered=True)
-        text_surfaces["disabled"] = Text(disp=self.disp, text=self.text, font=self.font, pos=text_pos, fg_color=(80, 80, 80), centered=True)
+        text_surfaces["inact"] = Text(
+            disp=self.disp,
+            text=self.text,
+            font=self.font,
+            pos=text_pos,
+            fg_color=self.i_font_color,
+            centered=True
+        )
+        text_surfaces["act"] = Text(
+            disp=self.disp,
+            text=self.text,
+            font=self.font,
+            pos=text_pos,
+            fg_color=self.a_font_color,
+            centered=True
+        )
+        text_surfaces["disabled"] = Text(
+            disp=self.disp,
+            text=self.text,
+            font=self.font,
+            pos=text_pos,
+            fg_color=(80, 80, 80),
+            centered=True
+        )
         return text_surfaces
 
-    def display(self):
-        '''It draws the button with the text (text itself, text font and text color), button size and position given in the arguments'''
-
+    def display(self) -> None:
+        """Displays the button and its text"""
         if self.enabled:
             if self.btn_transp:
                 self.disp.scr.blit(self.transp_surf, self.pos)
