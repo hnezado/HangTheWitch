@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e6400d0-20cc-4109-8fc4-4d1ea9395e8f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Intro.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Components.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Components.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/images/intro_space.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/images/intro_space.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/MainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/variables.py" beforeDir="false" afterPath="$PROJECT_DIR$/variables.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -4,6 +4,7 @@ from components.Text import Text
 class Components:
     def __init__(self) -> None:
         self.texts = {
+            "main": {},
             "game": {},
             "popup": {}
         }

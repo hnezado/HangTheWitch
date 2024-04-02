@@ -94,27 +94,54 @@ def generate_media():
 
 def generate_components():
     # Text Surfaces
-    comps.texts["game"]["tries_remaining"] = Text(disp=v.disp, text="Remaining tries: ",
-                                                  font=media.fonts["ingame_tries"],
-                                                  pos=(v.disp.w * 0.35, v.disp.h * 0.05), fg_color=(150, 0, 0))
-    comps.texts["game"]["tries"] = Text(disp=v.disp, text="NaN")
-    comps.texts["popup"]["txt"] = Text(disp=v.disp.scr, text='Are you sure  ', font=media.fonts["popup_txt"],
-                                       pos=(v.disp.w * 0.5, v.disp.h * 0.46))
+    comps.texts["main"]["title"] = Text(
+        disp=v.disp,
+        text="HANG THE WITCH",
+        font=media.fonts["menu_title"],
+        fg_color=(130, 96, 94),
+        centered=True
+    )
+    comps.texts["game"]["tries_remaining"] = Text(
+        disp=v.disp,
+        text="Remaining tries: ",
+        font=media.fonts["ingame_tries"],
+        pos=(v.disp.w * 0.35, v.disp.h * 0.05),
+        fg_color=(150, 0, 0)
+    )
+    comps.texts["game"]["tries"] = Text(
+        disp=v.disp,
+        text="NaN"
+    )
+    comps.texts["popup"]["txt"] = Text(
+        disp=v.disp.scr,
+        text='Are you sure  ',
+        font=media.fonts["popup_txt"],
+        pos=(v.disp.w * 0.5, v.disp.h * 0.46)
+    )
 
     # Animations
-    comps.animations["intro"]["space"] = Animation(disp=v.disp,
-                                                   image=media.images["intro_space"],
-                                                   pos=(v.disp.w * 0.5 - 150, v.disp.h * 0.75),
-                                                   anim_times=1,
-                                                   delay=2,
-                                                   reset_frame=False
-                                                   )
-    comps.animations["inmenu_toggle_music"] = Animation(disp=v.disp, image=media.images["inmenu_toggle"],
-                                                        pos=(v.disp.w * 0.575, v.disp.h * 0.475), anim_times=1,
-                                                        reset_frame=False)
-    comps.animations["inmenu_toggle_sound"] = Animation(disp=v.disp, image=media.images["inmenu_toggle"],
-                                                        pos=(v.disp.w * 0.58, v.disp.h * 0.575), anim_times=1,
-                                                        reset_frame=False)
+    comps.animations["intro"]["space"] = Animation(
+        disp=v.disp,
+        image=media.images["intro_space"],
+        pos=(v.disp.w * 0.5 - 150, v.disp.h * 0.75),
+        anim_times=1,
+        delay=2,
+        reset_frame=False
+    )
+    comps.animations["inmenu_toggle_music"] = Animation(
+        disp=v.disp,
+        image=media.images["inmenu_toggle"],
+        pos=(v.disp.w * 0.575, v.disp.h * 0.475),
+        anim_times=1,
+        reset_frame=False
+    )
+    comps.animations["inmenu_toggle_sound"] = Animation(
+        disp=v.disp,
+        image=media.images["inmenu_toggle"],
+        pos=(v.disp.w * 0.58, v.disp.h * 0.575),
+        anim_times=1,
+        reset_frame=False
+    )
 
     # Buttons
     comps.buttons["main"]["play"] = Button(v.disp, (200, 50), (v.disp.w * 0.5, v.disp.h * 0.75), 'Play',
@@ -149,6 +176,7 @@ def update_main_elements():
     # Main Menu
     v.main_menu.update(
         images=media.images,
+        texts=comps.texts,
         buttons=comps.buttons
     )
 
