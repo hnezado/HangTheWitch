@@ -24,7 +24,8 @@ async def main():
         show_ingame_menu()
         show_popup()
         show_transitions()
-        
+
+        # print(f"updating with opacity: {v.comps.transitions["slide"].crops_pos[-1]}")
         v.pg.display.update()
         v.clock.tick(v.ticks)
 

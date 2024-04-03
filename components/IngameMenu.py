@@ -9,8 +9,9 @@ class IngameMenu:
         self.fade = None
         self.scroll = None
         self.scroll_pos = None
+        self.scroll_sound = None
 
-    def update(self, images, texts, animations, buttons):
+    def update(self, images, sounds, texts, animations, buttons):
         """This method is called after loading all the content"""
         self.images = images
         self.texts = texts
@@ -19,6 +20,7 @@ class IngameMenu:
         self.fade = self.images["fade"]
         self.scroll = self.images["inmenu_scroll"]
         self.scroll_pos = (self.disp.w * 0.5 - self.scroll.w * 0.5, self.disp.h * 0.5 - self.scroll.h * 0.5)
+        self.scroll_sound = sounds["scroll"]
 
     def display(self):
         if self.opened:
@@ -31,3 +33,11 @@ class IngameMenu:
             self.buttons["inmenu"]["main"].display()
             self.animations["inmenu_toggle_music"].display()
             self.animations["inmenu_toggle_sound"].display()
+
+    def open(self):
+        self.scroll_sound.play()
+        self.opened = True
+
+    def close(self):
+        self.scroll_sound.play()
+        self.opened = False

@@ -181,8 +181,15 @@ def generate_components():
     # Transitions
     comps.transitions["fade"] = Transition(
         disp=v.disp,
-        images=v.media.images,
+        image=v.media.images["fade_full"],
         type="fade"
+    )
+    comps.transitions["slide"] = Transition(
+        disp=v.disp,
+        image=v.media.images["ingame_bg"],
+        type="slide",
+        sound=v.media.sounds["menu_btn_play"],
+        speed=150
     )
 
 
@@ -219,6 +226,7 @@ def update_main_elements():
     # Ingame Menu
     v.ingame_menu.update(
         images=media.images,
+        sounds=media.sounds,
         texts=comps.texts,
         animations=comps.animations,
         buttons=comps.buttons

@@ -14,6 +14,10 @@ class MainMenu:
         self.images = images
         self.title = texts["main"]["title"]
         self.buttons = buttons
+        self.reset_anim()
+
+    def reset_anim(self):
+        self.anim_in_progress = True
         self.title_pos = [self.disp.w * 0.5, - self.title.h]
 
     def display(self):

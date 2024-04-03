@@ -2,7 +2,8 @@ import pygame as pg
 
 class Image:
     def __init__(self, path, number_of_frames=1, frames_direction="down") -> None:
-        self.img = pg.image.load(path)
+        self.path = path
+        self.img = pg.image.load(self.path)
         self.num_frames = number_of_frames
         self.frames_direction = frames_direction
         self.w, self.h = self.get_single_frame_dim() # Refers to frame dimensions

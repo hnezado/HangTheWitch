@@ -30,11 +30,23 @@ def start_intro():
     # v.active_win = "dif"
     pg.mixer.music.load(v.media.musics["menu_wind"])
     if v.music_on:
-        pg.mixer.music.play(loops=-1, fade_ms=2000)
+        pg.mixer.music.play(loops=-1, fade_ms=1000)
 
 
 def fade_out_music():
     pg.mixer.music.fadeout(2000)
+
+
+def play_ingame_music():
+    pg.mixer.music.load(v.media.musics["ingame_music"])
+    if v.music_on:
+        pg.mixer.music.play(loops=-1, fade_ms=1000)
+
+
+def play_menu_wind():
+    pg.mixer.music.load(v.media.musics["menu_wind"])
+    if v.music_on:
+        pg.mixer.music.play(loops=-1, fade_ms=1000)
 
 
 def goto_element(elem):
@@ -47,17 +59,18 @@ def goto_element(elem):
             fade_out_music_task = threading.Thread(target=fade_out_music)
             fade_out_music_task.daemon = True
             fade_out_music_task.start()
-            pg.mixer.music.load(v.media.musics["menu_wind"])
-            if v.music_on:
-                pg.mixer.music.play(loops=-1, fade_ms=2000)
+            fade_in_music_task = threading.Thread(target=play_menu_wind)
+            fade_in_music_task.daemon = True
+            fade_in_music_task.start()
 
         elif elem == "dif":
             fade_out_music_task = threading.Thread(target=fade_out_music)
             fade_out_music_task.daemon = True
             fade_out_music_task.start()
-            pg.mixer.music.load(v.media.musics["ingame_music"])
-            if v.music_on:
-                pg.mixer.music.play(loops=-1, fade_ms=2000)
+            fade_in_music_task = threading.Thread(target=play_ingame_music)
+            fade_in_music_task.daemon = True
+            fade_in_music_task.start()
+            v.media.sounds["scroll"].play()
         elif elem == "game":
             pass
 
@@ -66,13 +79,14 @@ def click(fn):
     def clicker(*args, **kwargs):
         v.media.sounds["btn_click"].play()
         return fn(*args, **kwargs)
+
     return clicker
 
 
 ### Main Menu ###
 @click
 def play(*args, **kwargs):
-    goto_element("dif")
+    v.comps.transitions["slide"].start(fn=goto_element, to="dif")
 
 
 @click
@@ -103,18 +117,18 @@ def create_new_game(*args, **kwargs):
 @click
 def open_menu(*args, **kwargs):
     v.ingame_menu.buttons["inmenu"]["new"].enabled = v.active_win != "dif"
-    v.ingame_menu.opened = True
+    v.ingame_menu.open()
 
 
 @click
 def close_menu():
-    v.ingame_menu.opened = False
+    v.ingame_menu.open()
 
 
 ### Ingame Menu ###
 @click
 def resume_game(*args, **kwargs):
-    v.ingame_menu.opened = False
+    v.ingame_menu.close()
 
 
 @click
@@ -154,6 +168,7 @@ def toggle_sound(*args, **kwargs):
 
 @click
 def goto_main_menu(*args, **kwargs):
+    v.main_menu.reset_anim()
     v.comps.transitions["fade"].start(fn=goto_element, to="main_menu")
 
 
