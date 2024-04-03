@@ -25,7 +25,6 @@ async def main():
         show_popup()
         show_transitions()
 
-        # print(f"updating with opacity: {v.comps.transitions["slide"].crops_pos[-1]}")
         v.pg.display.update()
         v.clock.tick(v.ticks)
 
@@ -46,8 +45,6 @@ def show_dif():
 
 
 def show_game():
-    """Shows the game window"""
-    
     if v.active_win == "game":
         v.game.display()
 

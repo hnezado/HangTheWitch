@@ -14,7 +14,7 @@ class Button:
                  act_margin=6,
                  btn_transp=False,
                  txt_pos_mod=None,
-                 fn=lambda: print("empty fn")):
+                 fn=lambda: None):
         self.disp = disp
         self.w, self.h = dim
         self.text = text
@@ -117,7 +117,6 @@ class Button:
         if self.enabled:
             if self.btn_transp:
                 self.disp.scr.blit(self.transp_surf, self.pos)
-                # draw.rect(self.disp.scr, self.i_color, self.inact_rect)
                 if Rect(self.inact_rect).collidepoint(mouse.get_pos()):
                     self.text_surfaces["act"].display()
                 else:

@@ -54,8 +54,6 @@ class Dif:
         self.disp.scr.blit(self.images["ingame_bg"].img, (0, 0))
         self.disp.scr.blit(self.images["dif_scroll"].img, self.pos_scroll)
         self.text.display()
-
-        # Buttons
         self.btn_menu.display()
         for btn in self.dif_btns:
             btn.display()

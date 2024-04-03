@@ -82,19 +82,3 @@ class Popup:
             self.accept_btn.display()
             if self.type == "verify":
                 self.cancel_btn.display()
-
-            # for btn in self.buttons["popup"].values():
-            #     btn.display()
-            
-            # self.windows_rects["outer"] = pg.draw.rect(self.disp.scr, (130, 96, 94), (self.disp.w * 0.5 - w * 0.5, self.disp.h * 0.5 - 50, 220, 100)) # adaptar tamaño window al texto
-            # # Inner Window Rect
-            # self.windows_rects["inner"] = None
-            
-            # pg.draw.rect(self.disp.scr, (130, 96, 94), (self.disp.w * 0.5 - 110, self.disp.h * 0.5 - 50, 220, 100)) # adaptar tamaño window al texto
-            # pg.draw.rect(self.disp.scr, (192, 138, 117), (self.disp.w * 0.5 - 105, self.disp.h * 0.5 - 45, 210, 90)) # aquí lo mismo que arriba
-
-            # Displaying self made question_mark due to the lack of it in the font
-            # self.disp.scr.blit(self.images["question"], (self.disp.w * 0.59, self.disp.h * 0.44))
-            
-            # but_verify_yes_main.drawing()
-            # but_verify_no.drawing()

@@ -1,5 +1,6 @@
 import pygame as pg
 
+
 class Text:
     def __init__(self, disp, text, font=None, pos=(0, 0), fg_color=(20, 20, 20), centered=False) -> None:
         self.disp = disp
@@ -14,7 +15,7 @@ class Text:
         self.updated = False
 
     def get_surface(self) -> object:
-        '''Generates the text using the specified font and color'''
+        """Generates the text using the specified font and color"""
         txt_surf = self.font.render(self.text, True, self.fg_color)
         return txt_surf
 
@@ -27,7 +28,7 @@ class Text:
             self.rect.center = self.pos
 
     def display(self) -> None:
-        '''Displays the text surface on the specified position'''
+        """Displays the text surface on the specified position"""
         if not self.updated:
             self.update()
         if self.centered:

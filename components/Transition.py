@@ -9,11 +9,13 @@ class Transition:
         self.type = type  # Transition type ("fade", "slide")
         self.mode = None  # Transition mode ("in" or "out")
         self.speed = speed
+
         # Delay to ensure updating screen before calling wrapped function
         self.fn_counter = 0
         self.fn = None
         self.target = None
         self.fn_ready = False
+
         # Delay to ensure a smooth element change in the background
         # (goto_element is called while transition is still displaying)
         self.end_counter = 0

@@ -1,11 +1,9 @@
 import pygame as pg
 import variables as v
 import functions as fn
-import threading
 
 
 # ONLY main.py must import this module
-
 def event_manager():
     """Recovers the events and handles them individually"""
     for event in pg.event.get():
@@ -20,8 +18,7 @@ def event_handler(event):
         quit()
 
     if any([popup.opened for popup in v.popups.values()]):
-        # for popup in v.popups.values():
-        for key, popup in v.popups.items():
+        for popup in v.popups.values():
             if popup.opened:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_RETURN:

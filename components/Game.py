@@ -21,7 +21,7 @@ class Game:
         self.victory_texts = None
         self.gameover_texts = None
 
-    def update(self, fonts: object, images: object, sounds: object, texts: object, buttons: object):
+    def update(self, fonts: dict, images: dict, sounds: dict, texts: dict, buttons: dict):
         """This method is called after loading all the content"""
         self.fonts = fonts
         self.images = images
@@ -80,7 +80,7 @@ class Game:
     def generate_pops(self) -> list:
         """Generates all the pop Animation() instances with its positions"""
         pops = []
-        pos = [  # -37
+        pos = [
             (self.gallow_pos[0] + 113, self.gallow_pos[1] + 253),
             (self.gallow_pos[0] + 3, self.gallow_pos[1] + 113),
             (self.gallow_pos[0] + 113, self.gallow_pos[1] - 22),

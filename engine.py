@@ -240,15 +240,3 @@ def update_main_elements():
             sound_btn_click=v.media.sounds["btn_click"],
             buttons=v.comps.buttons
         )
-    # v.popups["quit_confirm"].update(
-    #     fonts=v.media.fonts,
-    #     images=v.media.images,
-    #     sound_btn_click=v.media.sounds["btn_click"],
-    #     buttons=v.comps.buttons
-    # )
-    # v.popups["new_game_confirm"].update(
-    #     fonts=v.media.fonts,
-    #     images=v.media.images,
-    #     sound_btn_click=v.media.sounds["btn_click"],
-    #     buttons=v.comps.buttons
-    # )

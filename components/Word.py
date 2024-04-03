@@ -4,6 +4,7 @@ from random_words import RandomWords
 from components.Letter import Letter
 from components.Animation import Animation
 
+
 class Word:
     def __init__(self, disp, scratch, scratch_snd, letter_conf, difficulty) -> None:
         self.disp = disp
@@ -19,9 +20,6 @@ class Word:
             ['y', 'g', 'p', 'b', 'v'],
             ['k', 'q', 'j', 'x', 'z']
         ]
-        print("Creating Word() with dif:", self.difficulty)
-        # self.word = "palabramuylarga"
-        # self.word = "ab"
         self.word = self.generate_word()
         self.letters = []
         self.letters_txt = []
@@ -33,7 +31,8 @@ class Word:
     def generate_word(self):
         """Generates a random word that meets predefined criteria for word difficulty.
     
-            This function continuously creates a random word and checks its length and letter rarity against specified conditions, iterating until all conditions are satisfied.
+            This function continuously creates a random word and checks its length and letter rarity against specified
+            conditions, iterating until all conditions are satisfied.
             
             Returns:
                 str: A randomly generated word that conforms to the preset word difficulty criteria.
@@ -42,16 +41,15 @@ class Word:
         while True:
             min_letter = 3
             max_letter = min_letter + math.ceil(self.difficulty*1.5)
-            word = ""
-            if self.difficulty > 8: # dif (9, 10)
+            if self.difficulty > 8:     # dif (9, 10)
                 word = self.rw.random_word(min_letter_count=min_letter)
-            elif self.difficulty > 2: # dif (7, 8)
+            elif self.difficulty > 2:   # dif (7, 8)
                 word = self.rw.random_word(min_letter_count=min_letter)
-            elif self.difficulty > 2: # dif (5, 6)
+            elif self.difficulty > 2:   # dif (5, 6)
                 word = self.rw.random_word(min_letter_count=min_letter)
-            elif self.difficulty > 2: # dif (3, 4)
+            elif self.difficulty > 2:   # dif (3, 4)
                 word = self.rw.random_word(min_letter_count=min_letter)
-            else: # dif (1, 2)
+            else:                       # dif (1, 2)
                 word = self.rw.random_word(min_letter_count=min_letter)
             
             len_ok = len(word) <= max_letter
@@ -65,7 +63,7 @@ class Word:
                 
                 selected_group = None
                 for group_num, weight in letter_dif_count.items():
-                    if (weight >= len(word)/3):
+                    if weight >= len(word) / 3:
                         selected_group = group_num
                 if not selected_group:
                     selected_group = max(letter_dif_count, key=letter_dif_count.get)
@@ -84,7 +82,6 @@ class Word:
         """
         for letter_str in self.word:
             letter = Letter(disp=self.disp, txt=letter_str)
-            # self.word_width += letter.text_surf.rect.w + self.letter_conf["gap"]
             self.letters.append(letter)
             self.letters_txt.append(letter.txt)
 
@@ -103,7 +100,13 @@ class Word:
                 letter_pos = letter.text_surf.pos
                 img_dim = self.scratch.w, self.scratch.h
                 scratch_pos = (letter_pos[0] - img_dim[0] * 0.5, letter_pos[1] - img_dim[1] * 0.5)
-                self.covers.append(Animation(disp=self.disp, image=self.scratch, pos=scratch_pos, delay=2, reset_frame=False))
+                self.covers.append(Animation(
+                    disp=self.disp,
+                    image=self.scratch,
+                    pos=scratch_pos,
+                    delay=2,
+                    reset_frame=False)
+                )
 
     def display(self):
         for letter in self.letters:
