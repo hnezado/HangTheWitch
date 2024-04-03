@@ -10,6 +10,7 @@ from components.Popup import Popup
 from components.Text import Text
 from components.Animation import Animation
 from components.Button import Button
+from components.Transition import Transition
 from functions import update_components, start_intro
 
 
@@ -176,6 +177,13 @@ def generate_components():
                                               media.fonts["ingame_menu_btn"], txt_pos_mod=(-36, 5), btn_transp=True)
     comps.buttons["inmenu"]["main"] = Button(v.disp, (200, 20), (v.disp.w * 0.5, v.disp.h * 0.7), 'Main menu',
                                              media.fonts["ingame_menu_btn"], txt_pos_mod=(-15, 5), btn_transp=True)
+
+    # Transitions
+    comps.transitions["fade"] = Transition(
+        disp=v.disp,
+        images=v.media.images,
+        type="fade"
+    )
 
 
 def update_main_elements():

@@ -14,7 +14,7 @@ def initialize():
     ng.init_vars()
 
 
-def main():
+async def main():
     while True:
         event_manager()
         show_intro()
@@ -23,6 +23,7 @@ def main():
         show_game()
         show_ingame_menu()
         show_popup()
+        show_transitions()
         
         v.pg.display.update()
         v.clock.tick(v.ticks)
@@ -57,6 +58,11 @@ def show_ingame_menu():
 def show_popup():
     for popup in v.popups.values():
         popup.display()
+
+
+def show_transitions():
+    for transition in v.comps.transitions.values():
+        transition.display()
 
 
 if __name__ == '__main__':

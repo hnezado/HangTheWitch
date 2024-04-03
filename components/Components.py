@@ -20,6 +20,7 @@ class Components:
             "inmenu": {},
             "popup": {}
         }
+        self.transitions = {}
 
     # TODO check if this class/method is necessary
     def add_text(self, disp: object, name: str, text: str,

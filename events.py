@@ -1,6 +1,7 @@
 import pygame as pg
 import variables as v
 import functions as fn
+import threading
 
 
 # ONLY main.py must import this module
@@ -29,12 +30,8 @@ def event_handler(event):
                         popup.cancel_btn.fn()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     if pg.Rect(popup.accept_btn.inact_rect).collidepoint(event.pos):
-                        print(f"Accepting in popup {key}")
-                        print(f"Executing function: {popup.accept_btn.fn}")
                         popup.accept_btn.fn()
                     if pg.Rect(popup.cancel_btn.inact_rect).collidepoint(event.pos):
-                        print(f"Cancelling in popup {key}")
-                        print(f"Executing function: {popup.accept_btn.fn}")
                         popup.cancel_btn.fn()
     else:
         if v.ingame_menu.opened:

@@ -26,5 +26,3 @@ media = Media()
 
 # Components
 comps = Components()
-animations = {}
-buttons = {}
