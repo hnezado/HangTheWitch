@@ -5,26 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e6400d0-20cc-4109-8fc4-4d1ea9395e8f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Button.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Components.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Components.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Dif.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Dif.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Image.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Image.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Letter.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Letter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Popup.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Popup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Text.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Text.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Transition.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Transition.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Word.py" beforeDir="false" afterPath="$PROJECT_DIR$/components/Word.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/events.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions_2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notes.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vars_2.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,19 +40,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jekthor\Desktop\HangTheWitch\src" />
       <recent name="C:\Users\Jekthor\Desktop\hang_the_witch" />
     </key>
   </component>
@@ -130,7 +115,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
+        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
       </set>
     </attachedChunks>
   </component>

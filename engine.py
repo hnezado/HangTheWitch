@@ -47,8 +47,8 @@ def generate_main_elements():
     v.ingame_menu = IngameMenu(disp=v.disp)
     v.popups["quit_confirm"] = Popup(
         disp=v.disp,
-        text="Are you sure",
-        question_mod_pos=(-25, 5)
+        text="Quit game",
+        question_mod_pos=(-45, 5)
     )
     v.popups["new_game_confirm"] = Popup(
         disp=v.disp,
@@ -124,12 +124,6 @@ def generate_components():
     comps.texts["game"]["tries"] = Text(
         disp=v.disp,
         text="NaN"
-    )
-    comps.texts["popup"]["txt"] = Text(
-        disp=v.disp.scr,
-        text='Are you sure  ',
-        font=media.fonts["popup_txt"],
-        pos=(v.disp.w * 0.5, v.disp.h * 0.46)
     )
 
     # Animations
