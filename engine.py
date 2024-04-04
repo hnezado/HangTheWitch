@@ -25,10 +25,10 @@ class Disp:
 
 
 def init_vars():
-    v.disp = Disp(w=v.config["disp"]["dim"]["w"], h=v.config["disp"]["dim"]["h"])
+    v.disp = Disp(w=800, h=600)
     v.disp.scr = pg.display.set_mode(size=(v.disp.w, v.disp.h))
-    pg.display.set_caption(v.config["full_name"])
-    pg.display.set_icon(pg.image.load(v.config["icon"]))
+    pg.display.set_caption("Hang The Witch")
+    pg.display.set_icon(pg.image.load("data/images/icon.png"))
 
     generate_main_elements()
     generate_media()

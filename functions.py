@@ -105,7 +105,7 @@ def create_new_game(**kwargs):
         disp=v.disp,
         scratch=v.media.images["ingame_scratch"],
         scratch_snd=v.media.sounds["ingame_scratch"],
-        letter_conf=v.config["letter"],
+        letter_conf={"dim": {"w": 32, "h": 50}, "gap": 20},
         difficulty=kwargs["dif"]
     )
     goto_element("game")

@@ -1,4 +1,3 @@
-import json
 import asyncio
 import variables as v
 import engine as ng
@@ -6,11 +5,6 @@ from events import event_manager
 
 
 def initialize():
-    
-    # Loads the config file
-    with open('config.json') as f:
-        v.config = json.load(f)
-        
     ng.init_vars()
 
 
