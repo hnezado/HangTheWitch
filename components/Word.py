@@ -1,4 +1,6 @@
 import math
+from pygame import Surface
+from pygame.mixer import Sound
 from typing import Callable
 from random_words import RandomWords
 from components.Letter import Letter
@@ -6,7 +8,7 @@ from components.Animation import Animation
 
 
 class Word:
-    def __init__(self, disp, scratch, scratch_snd, letter_conf, difficulty) -> None:
+    def __init__(self, disp, scratch: Surface, scratch_snd: Sound, letter_conf: dict, difficulty: int) -> None:
         self.disp = disp
         self.scratch = scratch
         self.scratch_snd = scratch_snd
@@ -28,16 +30,13 @@ class Word:
         self.calculate_letter_pos()
         self.generate_covers()
 
-    def generate_word(self):
+    def generate_word(self) -> str:
         """Generates a random word that meets predefined criteria for word difficulty.
-    
             This function continuously creates a random word and checks its length and letter rarity against specified
             conditions, iterating until all conditions are satisfied.
-            
             Returns:
                 str: A randomly generated word that conforms to the preset word difficulty criteria.
         """
-        
         while True:
             min_letter = 3
             max_letter = min_letter + math.ceil(self.difficulty*1.5)
@@ -72,9 +71,8 @@ class Word:
                     break
         return word
 
-    def parse_word(self):
+    def parse_word(self) -> None:
         """Extracts properties of the individual letters from a random word.
-
             Returns:
                 dict: A dictionary containing properties of each letter, including:
                     - "letter": The letter itself (string).
@@ -85,7 +83,8 @@ class Word:
             self.letters.append(letter)
             self.letters_txt.append(letter.txt)
 
-    def calculate_letter_pos(self):
+    def calculate_letter_pos(self) -> None:
+        """Calculates every letter position"""
         letter_w = self.letter_conf["dim"]["w"]
         gap = self.letter_conf["gap"]
         word_w = (letter_w + gap) * (len(self.letters) - 1)
@@ -95,6 +94,7 @@ class Word:
             letter.text_surf.pos = pos
             
     def generate_covers(self):
+        """Generates every covers Surface (image) which covers every letter"""
         for letter in self.letters:
             if not letter.guessed:
                 letter_pos = letter.text_surf.pos
@@ -109,6 +109,7 @@ class Word:
                 )
 
     def display(self):
+        """Displays all the word letters with its covers"""
         for letter in self.letters:
             letter.text_surf.display()
         for cover in self.covers:

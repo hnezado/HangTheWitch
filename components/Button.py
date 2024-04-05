@@ -1,6 +1,6 @@
 import pygame as pg
-from typing import Any, Callable
 from pygame import Surface, Rect, draw, SRCALPHA, mouse
+from typing import Any, Callable
 from components.Text import Text
 
 
@@ -48,6 +48,7 @@ class Button:
         self.fn = fn
 
     def __setattr__(self, name: str, value: Any) -> None:
+        """Wraps every assigning function with enabled checking"""
         super().__setattr__(name, value)
         if name == "pos":
             self.inact_rect = pg.Rect(
@@ -68,6 +69,7 @@ class Button:
             super().__setattr__(name, self.check_enabled)
 
     def check_enabled(self, *args, **kwargs) -> Callable:
+        """Checks if button is enabled before calling its asigned function"""
         if self.enabled:
             return self.fn_buffer(*args, **kwargs)
         else:

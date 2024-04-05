@@ -2,7 +2,7 @@ from components.Image import Image
 
 
 class Transition:
-    def __init__(self, disp, image, type, sound=None, speed=10):
+    def __init__(self, disp, image: Image, type: str, sound=None, speed=10) -> None:
         self.disp = disp
         self.image = image
         self.sound = sound
@@ -31,21 +31,24 @@ class Transition:
 
         self.reset()
 
-    def reset(self):
+    def reset(self) -> None:
+        """Resets the transition"""
         self.fn_counter = 0
         self.opacity = 0
         self.crops_pos = self.generate_crops_pos() if self.type == "slide" else []
         self.current_crop = 0
         self.end_counter = 0
 
-    def generate_crops(self):
+    def generate_crops(self) -> list:
+        """Generates all the image crops (individual background boards)"""
         crops = []
         for _ in range(len(self.image.frames)):
             img = Image(path=self.image.path, number_of_frames=6)
             crops.append(img)
         return crops
 
-    def generate_crops_pos(self):
+    def generate_crops_pos(self) -> list:
+        """Generates all the image crops positions"""
         crops_pos = []
         for ind, crop in enumerate(self.crops):
             if ind % 2 == 0:
@@ -55,8 +58,8 @@ class Transition:
             crops_pos.append(pos)
         return crops_pos
 
-    def update(self):
-        """Updates the transition attributes while is in progress"""
+    def update(self) -> None:
+        """Updates the transition while is in progress"""
         if self.end_counter == 0:
             if self.type == "fade":
                 if self.mode == "in":
@@ -98,7 +101,8 @@ class Transition:
                 self.fn_ready = True
                 self.end_counter += 1
 
-    def displace(self, towards):
+    def displace(self, towards: str) -> None:
+        """Changes the current moving crop (board) position"""
         if towards == "right":
             if self.crops_pos[self.current_crop][0] == 0:
                 self.next_current_crop()
@@ -114,13 +118,14 @@ class Transition:
                 if self.crops_pos[self.current_crop][0] < 0:
                     self.crops_pos[self.current_crop][0] = 0
 
-    def next_current_crop(self):
+    def next_current_crop(self) -> None:
+        """If the current moving crop (board) is in its final position, changes to the next one"""
         self.current_crop += 1
         if self.current_crop > len(self.crops) - 1:
             self.current_crop = 0
             self.call_fn()
 
-    def start(self, **kwargs):
+    def start(self, **kwargs) -> None:
         """Starts the transition"""
         try:
             self.fn = kwargs["fn"]
@@ -134,7 +139,8 @@ class Transition:
         if self.type == "slide":
             self.sound.play()
 
-    def display(self):
+    def display(self) -> None:
+        """Displays the current transition state"""
         if self.transition_in_progress:
             self.update()
             if self.type == "fade":

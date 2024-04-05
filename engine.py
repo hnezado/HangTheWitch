@@ -1,6 +1,7 @@
 import pygame as pg
 import variables as v
 from variables import media, comps
+from functions import update_buttons_functions, start_intro
 from components.Intro import Intro
 from components.MainMenu import MainMenu
 from components.Dif import Dif
@@ -11,20 +12,21 @@ from components.Text import Text
 from components.Animation import Animation
 from components.Button import Button
 from components.Transition import Transition
-from functions import update_components, start_intro
 
 
 class Disp:
-    def __init__(self, w, h):
-        self.w = w
-        self.h = h
-        self.scr = None
+    """This class contain the display details (width, height and the pygame surface itself)"""
+    def __init__(self, w: int, h: int) -> None:
+        self.w = w          # display width
+        self.h = h          # display height
+        self.scr = None     # display surface
 
     def __str__(self) -> str:
         return f'Object({self.__dict__})'
 
 
-def init_vars():
+def init_vars() -> None:
+    """Initializes every element and component"""
     v.disp = Disp(w=800, h=600)
     v.disp.scr = pg.display.set_mode(size=(v.disp.w, v.disp.h))
     pg.display.set_caption("Hang The Witch")
@@ -34,12 +36,13 @@ def init_vars():
     generate_media()
     generate_components()
     update_main_elements()
-    update_components()
+    update_buttons_functions()
 
     start_intro()
 
 
-def generate_main_elements():
+def generate_main_elements() -> None:
+    """Generates every element"""
     v.intro = Intro(disp=v.disp)
     v.main_menu = MainMenu(disp=v.disp)
     v.dif = Dif(disp=v.disp)
@@ -62,7 +65,8 @@ def generate_main_elements():
     )
 
 
-def generate_media():
+def generate_media() -> None:
+    """Generates every media instance (fonts, images and sounds/music)"""
     # Fonts
     media.add_font(name="menu_title", path="data/fonts/feral.ttf", size=120)
     media.add_font(name="menu_btn", path="data/fonts/feral.ttf", size=30, emphasis="bold")
@@ -105,7 +109,8 @@ def generate_media():
     media.add_music(name="ingame_music", path="data/sounds/game_music.ogg")
 
 
-def generate_components():
+def generate_components() -> None:
+    """Generates every component and stores them in the Components instance-> texts, animations and buttons"""
     # Text Surfaces
     comps.texts["main"]["title"] = Text(
         disp=v.disp,
@@ -187,7 +192,8 @@ def generate_components():
     )
 
 
-def update_main_elements():
+def update_main_elements() -> None:
+    """Updates every element with the loaded media and components"""
     # Intro
     v.intro.update(
         images=media.images,

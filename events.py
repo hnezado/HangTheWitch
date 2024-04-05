@@ -4,19 +4,17 @@ import functions as fn
 
 
 # ONLY main.py must import this module
-def event_manager():
+def event_manager() -> None:
     """Recovers the events and handles them individually"""
     for event in pg.event.get():
         event_handler(event)
 
 
-def event_handler(event):
+def event_handler(event) -> None:
     """Handles any event"""
-
     if event.type == pg.QUIT:
         pg.quit()
         quit()
-
     if any([popup.opened for popup in v.popups.values()]):
         for popup in v.popups.values():
             if popup.opened:
@@ -35,13 +33,13 @@ def event_handler(event):
             if v.active_win in ["dif", "game"]:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
-                        fn.close_menu()
+                        fn.resume_game()
                 if event.type == pg.MOUSEBUTTONDOWN:
                     for btn in v.comps.buttons["inmenu"].values():
                         if pg.Rect(btn.inact_rect).collidepoint(event.pos):
                             btn.fn()
             else:
-                fn.close_menu()
+                fn.resume_game()
         else:
             if v.active_win == "intro":
                 if event.type == pg.KEYDOWN:

@@ -11,8 +11,8 @@ class IngameMenu:
         self.scroll_pos = None
         self.scroll_sound = None
 
-    def update(self, images, sounds, texts, animations, buttons):
-        """This method is called after loading all the content"""
+    def update(self, images: dict, sounds: dict, texts: dict, animations: dict, buttons: dict) -> None:
+        """This method is called after loading all the content (media and components)"""
         self.images = images
         self.texts = texts
         self.animations = animations
@@ -22,7 +22,8 @@ class IngameMenu:
         self.scroll_pos = (self.disp.w * 0.5 - self.scroll.w * 0.5, self.disp.h * 0.5 - self.scroll.h * 0.5)
         self.scroll_sound = sounds["scroll"]
 
-    def display(self):
+    def display(self) -> None:
+        """Displays all the Ingame Menu components"""
         if self.opened:
             self.disp.scr.blit(self.fade.img, (0, 0))
             self.disp.scr.blit(self.scroll.img, self.scroll_pos)
@@ -34,10 +35,12 @@ class IngameMenu:
             self.animations["inmenu_toggle_music"].display()
             self.animations["inmenu_toggle_sound"].display()
 
-    def open(self):
+    def open(self) -> None:
+        """Opens the Ingame Menu"""
         self.scroll_sound.play()
         self.opened = True
 
-    def close(self):
+    def close(self) -> None:
+        """Closes the Ingame Menu"""
         self.scroll_sound.play()
         self.opened = False

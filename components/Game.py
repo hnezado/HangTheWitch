@@ -21,8 +21,8 @@ class Game:
         self.victory_texts = None
         self.gameover_texts = None
 
-    def update(self, fonts: dict, images: dict, sounds: dict, texts: dict, buttons: dict):
-        """This method is called after loading all the content"""
+    def update(self, fonts: dict, images: dict, sounds: dict, texts: dict, buttons: dict) -> None:
+        """This method is called after loading all the content (media and components)"""
         self.fonts = fonts
         self.images = images
         self.sounds = sounds

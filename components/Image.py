@@ -11,6 +11,7 @@ class Image:
         self.frames = self.get_frames_rects()
 
     def get_single_frame_dim(self) -> tuple:
+        """Retrieves a single frame dimensions"""
         img_rect = self.img.get_rect()
         frame_w, frame_h = 0, 0
         if self.frames_direction in ["down", "up"]:
@@ -22,6 +23,7 @@ class Image:
         return frame_w, frame_h
 
     def get_frames_rects(self) -> list:
+        """Retrieves the rect from every frame"""
         frames_rects = None
         if self.frames_direction in ["down", "up"]:
             frames_rects = [

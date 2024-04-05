@@ -28,7 +28,7 @@ class Popup:
         self.opened = False
 
     def update(self, fonts, images, sound_btn_click, buttons):
-        """This method is called after loading all the content"""
+        """This method is called after loading all the content (media and components)"""
         self.fonts = fonts
         self.images = images
         self.text_surface = Text(
@@ -68,10 +68,12 @@ class Popup:
             )
 
     def close(self):
+        """Closes the popup"""
         if self.opened:
             self.opened = False
 
     def display(self):
+        """Displays all the popup components"""
         if self.opened:
             self.disp.scr.blit(self.fade.img, (0, 0))
             pg.draw.rect(self.disp.scr, (130, 96, 94), self.rect_outer)

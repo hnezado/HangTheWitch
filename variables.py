@@ -4,8 +4,8 @@ from components.Media import Media
 from components.Components import Components
 
 # General
-pg.init()
 os.environ['SDL_VIDEO_CENTERED'] = '1'
+pg.init()
 clock = pg.time.Clock()
 ticks = 30
 disp = None

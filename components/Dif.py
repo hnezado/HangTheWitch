@@ -15,7 +15,7 @@ class Dif:
         self.dif_btns = None
 
     def update(self, fonts: dict, images: dict, buttons: dict) -> None:
-        """Updates main attributes (called after components loading)"""
+        """This method is called after loading all the content (media and components)"""
         self.fonts = fonts
         self.images = images
         self.pos_scroll = (
