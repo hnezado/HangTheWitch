@@ -8,14 +8,14 @@ from cx_Freeze import setup, Executable
 # fine tuning.
 build_options = {'packages': ["pygame", "random_words"], 'include_files': ["data"]}
 
-setup(name='HangTheWitch',
-      version='2.0',
+setup(name='hangTheWitch',
+      version='2.1',
       description='Hang The Witch game',
       options={'build_exe': build_options},
       executables=[
             Executable(
                   script="main.py",
-                  target_name="HangTheWitch",
+                  target_name="hangTheWitch",
                   base="Win32GUI",
                   icon="main.ico"
             )]
